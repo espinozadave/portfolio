@@ -294,7 +294,29 @@
 .img-container.cyber-card img:hover {
   transform: scale(1.02);
 }
+/* Navbar link glow on hover */
+.navbar .nav-link {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
 
+.navbar .nav-link:hover {
+  color: #0d6efd; /* glowing color */
+  text-shadow: 0 0 5px #0d6efd,
+               0 0 10px #0d6efd,
+               0 0 15px #0d6efd;
+}
+
+/* Navbar background glow effect */
+.navbar:hover {
+  box-shadow: 0 0 15px rgba(13, 110, 253, 0.6),
+              0 0 30px rgba(13, 110, 253, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Smooth transition back when not hovered */
+.navbar {
+  transition: box-shadow 0.3s ease;
+}
 
   </style>
 </head>

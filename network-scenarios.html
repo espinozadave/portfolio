@@ -208,7 +208,29 @@
                 0 0 80px #0d6efd;
   }
 }
+/* Navbar link glow on hover */
+.navbar .nav-link {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
 
+.navbar .nav-link:hover {
+  color: #0d6efd; /* glowing color */
+  text-shadow: 0 0 5px #0d6efd,
+               0 0 10px #0d6efd,
+               0 0 15px #0d6efd;
+}
+
+/* Navbar background glow effect */
+.navbar:hover {
+  box-shadow: 0 0 15px rgba(13, 110, 253, 0.6),
+              0 0 30px rgba(13, 110, 253, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Smooth transition back when not hovered */
+.navbar {
+  transition: box-shadow 0.3s ease;
+}
 
   </style>
 </head>
@@ -266,7 +288,7 @@
     </div>
     <!-- Card 2 -->
     <div class="col-12 col-md-6">
-      <a href="dns-down.html" class="card p-4 cyber-card activity-card text-decoration-none text-white">
+      <a href="network-attack.html" class="card p-4 cyber-card activity-card text-decoration-none text-white">
         <div class="card-body">
           <h5>Analyze Network Attacks</h5>
           <p>Investigated a website service interruption scenario, identified likely causes, and analyzed the impact of network attacks on organizational operations.</p>
@@ -275,7 +297,7 @@
     </div>
     <!-- Card 3 -->
     <div class="col-12 col-md-6">
-      <a href="bruteforce.html" class="card p-4 cyber-card activity-card text-decoration-none text-white">
+      <a href="os-hardening.html" class="card p-4 cyber-card activity-card text-decoration-none text-white">
         <div class="card-body">
           <h5>Apply OS Hardening Techniques</h5>
           <p>Examined a simulated website security incident, reviewed tcpdump logs, and recommended OS-level security measures to prevent similar attacks.</p>
@@ -284,7 +306,7 @@
     </div>
     <!-- Card 4 -->
     <div class="col-12 col-md-6">
-      <a href="phishing.html" class="card p-4 cyber-card activity-card text-decoration-none text-white">
+      <a href="network-hardening.html" class="card p-4 cyber-card activity-card text-decoration-none text-white">
         <div class="card-body">
           <h5>Analysis of Network Hardening</h5>
           <p>Assessed a fictional social media company’s vulnerabilities and proposed network hardening strategies to prevent future breaches.</p>

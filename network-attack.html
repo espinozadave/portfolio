@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Network Layer Communication | Dave Espinoza</title>
+  <title>Network Attack | Dave Espinoza</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -326,12 +326,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="network-scenarios.html">🔙 Network Security Incident Reports</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="network-attack.html">Network Attack</a></li>
+          <li class="nav-item"><a class="nav-link" href="network-layer.html">Network Layer</a></li>
           <li class="nav-item"><a class="nav-link" href="os-hardening.html">OS Hardening Technique</a></li>
           <li class="nav-item"><a class="nav-link" href="network-hardening.html">Network Hardening</a></li>
         </ul>
@@ -341,76 +341,94 @@
 
 <div class="container" style="padding-top: 20px;">
 
-  <h1 class="mb-4">Network Layer Communication Analysis</h1>
+  <h1 class="mb-4">Network Attack</h1>
 
   <!-- Overview -->
   <h4 class="section-title">Overview</h4>
-  <p>
-In this activity, you will analyze DNS and ICMP traffic in transit using data from a network protocol analyzer tool. You will identify which network protocol and service were impacted by the cybersecurity incident. 
-In the Internet layer of the TCP/IP model, IP formats data packets into IP datagrams, which provide security analysts with insight into potentially suspicious traffic. 
-</p>
-<p>
-Knowing how to identify potentially malicious traffic on a network helps cybersecurity analysts assess security risks and reinforce network security. 
-After analyzing the data, you will report your findings so that security engineers can take appropriate action.
-</p>
+   <p>This activity focuses on analyzing abnormal network traffic to identify the cause of a service disruption affecting a company’s website. 
+    After receiving an alert about connection timeouts, I analyzed captured network packets and observed an unusually large number of TCP SYN requests coming from a suspicious IP address. 
+    The behavior indicated a potential SYN flood Denial-of-Service (DoS) attack targeting the web server.</p>
 
   <!-- Scope -->
  <h4 class="section-title">Scope</h4>
-<ul>
-<li>Analyze packet data captured from a network protocol analyzer.</li>
-<li>Identify which network protocols were involved in the incident.</li>
-<li>Review DNS and ICMP traffic for irregular patterns.</li>
-<li>Determine whether the activity indicated a potential network issue or security concern.</li>
-<li>Document findings and prepare a follow-up report.</li>
-</ul>
+<p>The investigation involved analyzing network traffic related to the web server during the incident. 
+    The objective was to identify the attack type, understand how it disrupted the service, and implement an immediate mitigation strategy to restore normal operations.</p>
 
   <!-- Key Skills -->
   <h4 class="section-title">Key Skills Demonstrated</h4>
   <ul>
    <li>Network traffic analysis</li>
-    <li>Understanding the Internet layer of the TCP/IP model</li>
-    <li>Protocol identification (DNS and ICMP)</li>
-    <li>Packet inspection using tcpdump logs</li>
-    <li>Incident assessment and documentation</li>
+    <li>TCP/IP communication analysis (three-way handshake)</li>
+    <li>Identification of SYN flood attacks</li>
+    <li>Incident investigation and troubleshooting</li>
+    <li>Basic mitigation and firewall response</li>
   </ul>
 
   <hr class="section-divider">
 
-<!-- Scenario -->
+    <!-- Scenario -->
   <h4 class="section-title">Scenario</h4>
   <div class="card p-4 cyber-card">
     <p>
       <strong>This scenario is based on a fictional company:</strong><br><br>
-      You are a cybersecurity analyst working at a company that specializes in providing IT services for clients. Several customers of clients reported that they were not able 
-      to access the client company website www.yummyrecipesforme.com, and saw the error “destination port unreachable” after waiting for the page to load.</p>
+      You work as a security analyst for a travel agency that advertises sales and promotions on the company’s website. 
+      The employees of the company regularly access the company’s sales webpage to search for vacation packages their customers might like. </p>
 
-    <p>You are tasked with analyzing the situation and determining which network protocol was affected during this incident. To start, you attempt to visit the website and you also receive the error “destination port unreachable.” 
-        To troubleshoot the issue, you load your network analyzer tool, tcpdump, and attempt to load the webpage again. To load the webpage, 
-        your browser sends a query to a DNS server via the UDP protocol to retrieve the IP address for the website's domain name; this is part of the DNS protocol. 
-        Your browser then uses this IP address as the destination IP for sending an HTTPS request to the web server to display the webpage. 
-        The analyzer shows that when you send UDP packets to the DNS server, you receive ICMP packets containing the error message: “udp port 53 unreachable.” 
+    <p>One afternoon, you receive an automated alert from your monitoring system indicating a problem with the web server. 
+        You attempt to visit the company’s website, but you receive a connection timeout error message in your browser.</p>
+
+    <p>You use a packet sniffer to capture data packets in transit to and from the web server. You notice a large number of TCP SYN requests coming from an unfamiliar IP address. 
+        The web server appears to be overwhelmed by the volume of incoming traffic and is losing its ability to respond to the abnormally large number of SYN requests. 
+        You suspect the server is under attack by a malicious actor. </p>
+
+    <p>You take the server offline temporarily so that the machine can recover and return to a normal operating status. 
+        You also configure the company’s firewall to block the IP address that was sending the abnormal number of SYN requests. 
+        You know that your IP blocking solution won’t last long, as an attacker can spoof other IP addresses to get around this block. 
+        You need to alert your manager about this problem quickly and discuss the next steps to stop this attacker and prevent this problem from happening again. 
+        You will need to be prepared to tell your boss about the type of attack you discovered and how it was affecting the web server and employees.</p>
   </div>
 
+  <h4 class="section-title">Attack Type Identified</h4>
+<p><strong>SYN Flood (Denial-of-Service Attack)</strong></p>
+<p>
+The analysis of network traffic revealed a high volume of incomplete TCP SYN
+requests targeting the web server, indicating a SYN flood attack designed to
+overwhelm server resources and disrupt legitimate connections.
+</p>
 
-  <h4 class="section-title">tcpdump log</h4>
+  <h4 class="section-title">Evidence 1 (Wireshark log)</h4>
    <div class="row g-4">
   <div class="col-md-10">
     <div class="img-container cyber-card">
-      <img src="assets/tcpdump log.png"
+      <img src="assets/Evidence 1.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
-           alt="tcpdump Evidence">
+           alt="Evidence">
     </div>
-    <p class="mt-2 text-center"><i>The tcpdump log shows a request from a source IP address to the DNS server attempting to resolve the IP address of yummyrecipesforme.com. The server responds with an ICMP error message stating “UDP port 53 unreachable.”</p></i>
+       <p class="mt-2 text-center"><i>Evidence 1 shows normal communication between the client and the web server, 
+        while a suspicious IP address begins sending a large number of TCP SYN requests, indicating the start of a potential SYN flood attack.</p></i>
   </div>
 </div>
 
-
-    <h4 class="section-title">Cybersecurity Incident Report Network Traffic Analysis</h4>
+  <h4 class="section-title">Evidence 2 (Wireshark log)</h4>
    <div class="row g-4">
   <div class="col-md-10">
     <div class="img-container cyber-card">
-      <img src="assets/Cybersecurity Incident Report Network Traffic Analysis.png"
+      <img src="assets/Evidence 2.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Evidence">
+    </div>
+        <p class="mt-2 text-center"><i>Evidence 2 shows that the suspicious IP address continues flooding the web server with a large number of TCP SYN requests, 
+            overwhelming the server and preventing it from responding to legitimate client connections.</p></i>
+  </div>
+</div>
+
+    <h4 class="section-title">Cybersecurity Incident Report Network Attack</h4>
+   <div class="row g-4">
+  <div class="col-md-10">
+    <div class="img-container cyber-card">
+      <img src="assets/Security Incident Report Network Attack.png"
            class="img-fluid rounded"
            onclick="openImageModal(this.src)"
            alt="Incident Report">
@@ -422,34 +440,33 @@ After analyzing the data, you will report your findings so that security enginee
 
 <!-- Activity / Findings -->
   <h4 class="section-title">Activity Summary & Findings</h4>
-  <p>After reviewing the tcpdump logs, DNS queries and ICMP packets were identified within the captured network traffic. The analysis involved examining packet structure, identifying the protocols in use, and evaluating whether any traffic patterns indicated suspicious activity.
-</p>
+  <p>Using Wireshark, I analyzed packet capture data and identified a high volume of TCP SYN requests directed at the web server. 
+    These requests initiated connections but did not complete the TCP three-way handshake, causing the server to allocate resources for incomplete sessions. 
+    This behavior overwhelmed the server and prevented legitimate users from accessing the website.</p>
 
-<p>
-This exercise demonstrated how cybersecurity analysts can inspect network traffic to better understand communication between systems and detect unusual behavior. By analyzing packet data and documenting findings, analysts provide valuable information that allows security engineers to investigate and resolve potential network issues.</p>
+  <p>The activity confirmed the presence of a SYN flood attack, a type of DoS attack designed to exhaust server resources by creating numerous incomplete TCP connections.</p>
 
-<h4 class="section-title">Tools Used</h4>
-<ul>
-<li><strong>tcpdump</strong> – Captured and analyzed network packets to observe DNS requests and ICMP responses.</li>
-<li><strong>Command-Line Interface (CLI)</strong> – Used to run tcpdump commands and review packet capture logs.</li>
-<li><strong>TCP/IP Protocol Analysis</strong> – Examined DNS and ICMP behavior at the network layer to identify communication issues.</li>
-</ul>
+  <!-- Tools Used -->
+  <h4 class="section-title">Tools Used</h4>
+  <ul>
+   <li>Wireshark – Network packet capture and traffic analysis</li>
+    <li>Firewall configuration – Blocking suspicious IP addresses</li>
+    <li>Network monitoring system – Detection of abnormal server activity</li>
+  </ul>
 
-<h4 class="section-title">Security Recommendations</h4>
-<ul>
-<li>Ensure DNS services are properly configured and actively running on UDP port 53.</li>
-<li>Implement continuous network monitoring to detect DNS service interruptions.</li>
-<li>Use firewall and network rules to verify that DNS traffic is not unintentionally blocked.</li>
-<li>Deploy logging and alerting systems to quickly identify DNS communication failures.</li>
-</ul>
-
-  <hr class="section-divider">
+    <!-- Security Recommendation -->
+  <h4 class="section-title">Security Recommendation</h4>
+  <ul>
+   <li>Use intrusion detection/prevention systems (IDS/IPS) to identify abnormal traffic patterns</li>
+    <li>Firewall configuration – Configure rate limiting for incoming connection requests</li>
+  </ul>
 
   <!-- PDF Resources -->
   <h4 class="section-title">Resources</h4>
   <div class="card p-4">
-    <a href="assets/Cybersecurity Incident Report Network Traffic Analysis.pdf" target="_blank" class="pdf-link">Cybersecurity Incident Report - Network Analysis (PDF)</a>
-    <a href="assets/tcpdump log.png" target="_blank" class="pdf-link">tcpdump log (PNG)</a>
+    <a href="assets/Analyze network attacks.pdf" target="_blank" class="pdf-link">Cybersecurity Incident Report - Network Attack (PDF)</a>
+    <a href="assets/Wireshark log.pdf" target="_blank" class="pdf-link">Wireshark log (PDF)</a>
+    <a href="assets/Wireshark log.xlsx" target="_blank" class="pdf-link">Wireshark log (Excel)</a>
   </div>
 
 </div>

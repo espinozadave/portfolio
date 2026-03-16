@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Network Layer Communication | Dave Espinoza</title>
+  <title>Network Hardening | Dave Espinoza</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -326,14 +326,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="network-scenarios.html">🔙 Network Security Incident Reports</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="network-layer.html">Network Layer</a></li>
           <li class="nav-item"><a class="nav-link" href="network-attack.html">Network Attack</a></li>
-          <li class="nav-item"><a class="nav-link" href="os-hardening.html">OS Hardening Technique</a></li>
-          <li class="nav-item"><a class="nav-link" href="network-hardening.html">Network Hardening</a></li>
+          <li class="nav-item"><a class="nav-link" href="os-hardening.html">OS Hardening</a></li>
         </ul>
       </div>
   </div>
@@ -341,115 +341,115 @@
 
 <div class="container" style="padding-top: 20px;">
 
-  <h1 class="mb-4">Network Layer Communication Analysis</h1>
+  <h1 class="mb-4">Analysis of Network Hardening</h1>
 
-  <!-- Overview -->
-  <h4 class="section-title">Overview</h4>
-  <p>
-In this activity, you will analyze DNS and ICMP traffic in transit using data from a network protocol analyzer tool. You will identify which network protocol and service were impacted by the cybersecurity incident. 
-In the Internet layer of the TCP/IP model, IP formats data packets into IP datagrams, which provide security analysts with insight into potentially suspicious traffic. 
-</p>
-<p>
-Knowing how to identify potentially malicious traffic on a network helps cybersecurity analysts assess security risks and reinforce network security. 
-After analyzing the data, you will report your findings so that security engineers can take appropriate action.
-</p>
+<!-- Overview -->
+<h4 class="section-title">Overview</h4>
+   <p>This activity analyzes a data breach affecting a social media organization caused by multiple 
+    security vulnerabilities. A security assessment was conducted to identify weaknesses in the network 
+    and recommend hardening techniques to strengthen the organization’s security posture.</p>
 
-  <!-- Scope -->
- <h4 class="section-title">Scope</h4>
-<ul>
-<li>Analyze packet data captured from a network protocol analyzer.</li>
-<li>Identify which network protocols were involved in the incident.</li>
-<li>Review DNS and ICMP traffic for irregular patterns.</li>
-<li>Determine whether the activity indicated a potential network issue or security concern.</li>
-<li>Document findings and prepare a follow-up report.</li>
-</ul>
+<!-- Scope -->
+<h4 class="section-title">Scope</h4>
+    <p>The assessment focused on identifying critical vulnerabilities within the organization’s 
+      network and recommending security hardening methods to reduce the risk of future breaches and 
+      unauthorized access.</p>
 
-  <!-- Key Skills -->
-  <h4 class="section-title">Key Skills Demonstrated</h4>
+<!-- Key Skills -->
+<h4 class="section-title">Key Skills Demonstrated</h4>
   <ul>
-   <li>Network traffic analysis</li>
-    <li>Understanding the Internet layer of the TCP/IP model</li>
-    <li>Protocol identification (DNS and ICMP)</li>
-    <li>Packet inspection using tcpdump logs</li>
-    <li>Incident assessment and documentation</li>
+    <li>Network security risk assessment</li>
+    <li>Identification of security vulnerabilities</li>
+    <li>Network hardening techniques</li>
+    <li>Security control recommendations</li>
+    <li>Cybersecurity documentation and reporting</li>
   </ul>
 
   <hr class="section-divider">
 
 <!-- Scenario -->
-  <h4 class="section-title">Scenario</h4>
+<h4 class="section-title">Scenario</h4>
   <div class="card p-4 cyber-card">
     <p>
       <strong>This scenario is based on a fictional company:</strong><br><br>
-      You are a cybersecurity analyst working at a company that specializes in providing IT services for clients. Several customers of clients reported that they were not able 
-      to access the client company website www.yummyrecipesforme.com, and saw the error “destination port unreachable” after waiting for the page to load.</p>
+        You are a security analyst working for a social media organization. The organization recently 
+        experienced a major data breach, which compromised the safety of their customers’ personal information, 
+        such as names and addresses. Your organization wants to implement strong network hardening practices that 
+        can be performed consistently to prevent attacks and breaches in the future.</p>
 
-    <p>You are tasked with analyzing the situation and determining which network protocol was affected during this incident. To start, you attempt to visit the website and you also receive the error “destination port unreachable.” 
-        To troubleshoot the issue, you load your network analyzer tool, tcpdump, and attempt to load the webpage again. To load the webpage, 
-        your browser sends a query to a DNS server via the UDP protocol to retrieve the IP address for the website's domain name; this is part of the DNS protocol. 
-        Your browser then uses this IP address as the destination IP for sending an HTTPS request to the web server to display the webpage. 
-        The analyzer shows that when you send UDP packets to the DNS server, you receive ICMP packets containing the error message: “udp port 53 unreachable.” 
-  </div>
-
-
-  <h4 class="section-title">tcpdump log</h4>
-   <div class="row g-4">
-  <div class="col-md-10">
-    <div class="img-container cyber-card">
-      <img src="assets/tcpdump log.png"
-           class="img-fluid"
-           onclick="openImageModal(this.src)"
-           alt="tcpdump Evidence">
-    </div>
-    <p class="mt-2 text-center"><i>The tcpdump log shows a request from a source IP address to the DNS server attempting to resolve the IP address of yummyrecipesforme.com. The server responds with an ICMP error message stating “UDP port 53 unreachable.”</p></i>
-  </div>
+    <p>After inspecting the organization’s network, you discover four major vulnerabilities. The four 
+      vulnerabilities are as follows:
+    <ul>
+        <li>The organization’s employees' share passwords.</li>
+        <li>The admin password for the database is set to the default.</li>
+        <li>The firewalls do not have rules in place to filter traffic coming in and out of the network.</li>
+        <li>Multifactor authentication (MFA) is not used.</li>
+    </ul>
+    If no action is taken to address these vulnerabilities, the organization is at risk of experiencing 
+    another data breach or other attacks in the future.</p>
+  
 </div>
 
-
-    <h4 class="section-title">Cybersecurity Incident Report Network Traffic Analysis</h4>
-   <div class="row g-4">
+<!-- Security Incident Report -->
+<h4 class="section-title">Network Hardening Risk Assessment</h4>
+  <div class="row g-4">
   <div class="col-md-10">
     <div class="img-container cyber-card">
-      <img src="assets/Cybersecurity Incident Report Network Traffic Analysis.png"
+      <img src="assets/Cybersecurity Incident Report Network Hardening.png"
            class="img-fluid rounded"
            onclick="openImageModal(this.src)"
            alt="Incident Report">
     </div>
   </div>
-</div>
+  </div>
 
-  <hr class="section-divider">
+<!-- Evidence -->
+<h4 class="section-title">Network Hardening Tools Reference</h4>
+  <div class="row g-4">
+  <div class="col-md-10">
+    <div class="img-container cyber-card">
+      <img src="assets/Network Hardening Tools.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Evidence">
+    </div>
+       <p class="mt-2 text-center"><i>This document lists common network hardening tools along with their 
+        descriptions and typical security uses, supporting the recommended methods used to strengthen the 
+        organization’s network security. </i></p>
+  </div>
+  </div>
+
+<hr class="section-divider">
 
 <!-- Activity / Findings -->
-  <h4 class="section-title">Activity Summary & Findings</h4>
-  <p>After reviewing the tcpdump logs, DNS queries and ICMP packets were identified within the captured network traffic. The analysis involved examining packet structure, identifying the protocols in use, and evaluating whether any traffic patterns indicated suspicious activity.
-</p>
+<h4 class="section-title">Activity Summary & Findings</h4>
+  <p>The investigation identified several critical vulnerabilities that contributed to the data breach, 
+    including shared employee passwords, default administrative credentials, lack of firewall traffic 
+    filtering, and the absence of multi-factor authentication. These weaknesses significantly increased 
+    the risk of unauthorized access and data compromise.</p>
 
-<p>
-This exercise demonstrated how cybersecurity analysts can inspect network traffic to better understand communication between systems and detect unusual behavior. By analyzing packet data and documenting findings, analysts provide valuable information that allows security engineers to investigate and resolve potential network issues.</p>
-
+<!-- Tools Used -->
 <h4 class="section-title">Tools Used</h4>
-<ul>
-<li><strong>tcpdump</strong> – Captured and analyzed network packets to observe DNS requests and ICMP responses.</li>
-<li><strong>Command-Line Interface (CLI)</strong> – Used to run tcpdump commands and review packet capture logs.</li>
-<li><strong>TCP/IP Protocol Analysis</strong> – Examined DNS and ICMP behavior at the network layer to identify communication issues.</li>
-</ul>
+  <ul>
+   <li>Strong Password Policies – Enforce complex and unique passwords.</li>
+   <li>Multi-Factor Authentication (MFA) – Add an additional authentication layer for user accounts.</li>
+   <li>Firewall Configuration & Traffic Filtering – Control inbound and outbound network traffic.</li>
+  </ul>
 
-<h4 class="section-title">Security Recommendations</h4>
-<ul>
-<li>Ensure DNS services are properly configured and actively running on UDP port 53.</li>
-<li>Implement continuous network monitoring to detect DNS service interruptions.</li>
-<li>Use firewall and network rules to verify that DNS traffic is not unintentionally blocked.</li>
-<li>Deploy logging and alerting systems to quickly identify DNS communication failures.</li>
-</ul>
-
-  <hr class="section-divider">
+<!-- Security Recommendation -->
+<h4 class="section-title">Security Recommendation</h4>
+  <ul>
+   <li>Implement strong password policies to prevent shared or default credentials.</li>
+   <li>Enable MFA for all users, especially administrative accounts.</li>
+   <li>Configure firewalls with proper traffic filtering to block unauthorized network access.</li>
+  </ul>
 
   <!-- PDF Resources -->
   <h4 class="section-title">Resources</h4>
   <div class="card p-4">
-    <a href="assets/Cybersecurity Incident Report Network Traffic Analysis.pdf" target="_blank" class="pdf-link">Cybersecurity Incident Report - Network Analysis (PDF)</a>
-    <a href="assets/tcpdump log.png" target="_blank" class="pdf-link">tcpdump log (PNG)</a>
+    <a href="assets/Network Hardening Security Incident Report.pdf" target="_blank" class="pdf-link">Network Hardening Risk Assessment (PDF)</a>
+    <a href="assets/Network Hardening Tools.pdf" target="_blank" class="pdf-link">Network Hardening Tools (PDF)</a>
+    <a href="assets/Network Hardening Tools.xlsx" target="_blank" class="pdf-link">Network Hardening Tools (Excel)</a>
   </div>
 
 </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Network Layer Communication | Dave Espinoza</title>
+  <title>OS Hardening Technique | Dave Espinoza</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -326,13 +326,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" href="network-scenarios.html">🔙 Network Security Incident Reports</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="network-layer.html">Network Layer</a></li>
           <li class="nav-item"><a class="nav-link" href="network-attack.html">Network Attack</a></li>
-          <li class="nav-item"><a class="nav-link" href="os-hardening.html">OS Hardening Technique</a></li>
           <li class="nav-item"><a class="nav-link" href="network-hardening.html">Network Hardening</a></li>
         </ul>
       </div>
@@ -341,115 +341,164 @@
 
 <div class="container" style="padding-top: 20px;">
 
-  <h1 class="mb-4">Network Layer Communication Analysis</h1>
+  <h1 class="mb-4">OS Hardening Technique</h1>
 
-  <!-- Overview -->
-  <h4 class="section-title">Overview</h4>
-  <p>
-In this activity, you will analyze DNS and ICMP traffic in transit using data from a network protocol analyzer tool. You will identify which network protocol and service were impacted by the cybersecurity incident. 
-In the Internet layer of the TCP/IP model, IP formats data packets into IP datagrams, which provide security analysts with insight into potentially suspicious traffic. 
-</p>
-<p>
-Knowing how to identify potentially malicious traffic on a network helps cybersecurity analysts assess security risks and reinforce network security. 
-After analyzing the data, you will report your findings so that security engineers can take appropriate action.
-</p>
+<!-- Overview -->
+<h4 class="section-title">Overview</h4>
+   <p>This activity investigates a website security incident affecting <i>yummyrecipesforme.com</i>. 
+      After receiving reports from users about suspicious downloads and slow system performance, a 
+      security investigation was conducted using tcpdump to analyze network traffic. The analysis 
+      revealed that a malicious actor compromised the web server through a brute force attack, 
+      modified the website’s source code, and embedded malware that redirected users to a malicious domain.</p>
 
-  <!-- Scope -->
- <h4 class="section-title">Scope</h4>
-<ul>
-<li>Analyze packet data captured from a network protocol analyzer.</li>
-<li>Identify which network protocols were involved in the incident.</li>
-<li>Review DNS and ICMP traffic for irregular patterns.</li>
-<li>Determine whether the activity indicated a potential network issue or security concern.</li>
-<li>Document findings and prepare a follow-up report.</li>
-</ul>
+<!-- Scope -->
+<h4 class="section-title">Scope</h4>
+    <p>The investigation focused on analyzing network traffic and identifying the sequence of events 
+       that occurred when users accessed the compromised website. The objective was to determine the 
+       network protocols involved, understand how the attack was executed, and recommend security 
+       measures to prevent similar brute force attacks in the future.</p>
 
-  <!-- Key Skills -->
-  <h4 class="section-title">Key Skills Demonstrated</h4>
+<!-- Key Skills -->
+<h4 class="section-title">Key Skills Demonstrated</h4>
   <ul>
-   <li>Network traffic analysis</li>
-    <li>Understanding the Internet layer of the TCP/IP model</li>
-    <li>Protocol identification (DNS and ICMP)</li>
-    <li>Packet inspection using tcpdump logs</li>
-    <li>Incident assessment and documentation</li>
+   <li>Network traffic analysis using tcpdump</li>
+    <li>Identification of network protocols in packet captures</li>
+    <li>Understanding of the TCP/IP model</li>
+    <li>Incident investigation and documentation</li>
+    <li>Detection of website compromise and malicious redirection</li>
+    <li>Security hardening and attack mitigation strategies</li>
   </ul>
 
   <hr class="section-divider">
 
 <!-- Scenario -->
-  <h4 class="section-title">Scenario</h4>
+<h4 class="section-title">Scenario</h4>
   <div class="card p-4 cyber-card">
     <p>
       <strong>This scenario is based on a fictional company:</strong><br><br>
-      You are a cybersecurity analyst working at a company that specializes in providing IT services for clients. Several customers of clients reported that they were not able 
-      to access the client company website www.yummyrecipesforme.com, and saw the error “destination port unreachable” after waiting for the page to load.</p>
+        You are a cybersecurity analyst for yummyrecipesforme.com, a website that sells recipes and cookbooks. 
+        A former employee has decided to lure users to a fake website with malware.</p>
 
-    <p>You are tasked with analyzing the situation and determining which network protocol was affected during this incident. To start, you attempt to visit the website and you also receive the error “destination port unreachable.” 
-        To troubleshoot the issue, you load your network analyzer tool, tcpdump, and attempt to load the webpage again. To load the webpage, 
-        your browser sends a query to a DNS server via the UDP protocol to retrieve the IP address for the website's domain name; this is part of the DNS protocol. 
-        Your browser then uses this IP address as the destination IP for sending an HTTPS request to the web server to display the webpage. 
-        The analyzer shows that when you send UDP packets to the DNS server, you receive ICMP packets containing the error message: “udp port 53 unreachable.” 
-  </div>
+    <p>The former employee/ hacker executed a brute force attack to gain access to the web host. 
+        They repeatedly entered several known default passwords for the administrative account until 
+        they correctly guessed the right one. After they obtained the login credentials, they were able 
+        to access the admin panel and change the website’s source code. They embedded a javascript function 
+        in the source code that prompted visitors to download and run a file upon visiting the website. 
+        After embedding the malware, the hacker changed the password to the administrative account. When 
+        customers download the file, they are redirected to a fake version of the website that contains 
+        the malware.</p>
 
+    <p>Several hours after the attack, multiple customers emailed yummyrecipesforme’s helpdesk. 
+        They complained that the company’s website had prompted them to download a file to access free recipes.
+        The customers claimed that, after running the file, the address of the website changed and their 
+        personal computers began running more slowly.</p>
 
-  <h4 class="section-title">tcpdump log</h4>
-   <div class="row g-4">
-  <div class="col-md-10">
-    <div class="img-container cyber-card">
-      <img src="assets/tcpdump log.png"
-           class="img-fluid"
-           onclick="openImageModal(this.src)"
-           alt="tcpdump Evidence">
-    </div>
-    <p class="mt-2 text-center"><i>The tcpdump log shows a request from a source IP address to the DNS server attempting to resolve the IP address of yummyrecipesforme.com. The server responds with an ICMP error message stating “UDP port 53 unreachable.”</p></i>
-  </div>
+    <p>In response to this incident, the website owner tries to log in to the admin panel but is unable to, 
+        so they reach out to the website hosting provider. You and other cybersecurity analysts are tasked 
+        with investigating this security event.</p>
+
+    <p>To address the incident, you create a sandbox environment to observe the suspicious website behavior. 
+        You run the network protocol analyzer tcpdump, then type in the URL for the website, 
+        yummyrecipesforme.com. As soon as the website loads, you are prompted to download an executable 
+        file to update your browser. You accept the download and allow the file to run. You then observe 
+        that your browser redirects you to a different URL, greatrecipesforme.com, which contains the malware.</p>
+
+    <p>The logs show the following process:
+    <ul>
+        <li>The browser initiates a DNS request: It requests the IP address of the yummyrecipesforme.com URL from the DNS server.</li>
+        <li>The DNS replies with the correct IP address. </li>
+        <li>The browser initiates an HTTP request: It requests the yummyrecipesforme.com webpage using the IP address sent by the DNS server.</li>
+        <li>The browser initiates the download of the malware.</li>
+        <li>The browser initiates a DNS request for greatrecipesforme.com.</li>
+        <li>The DNS server responds with the IP address for greatrecipesforme.com.</li>
+        <li>The browser initiates an HTTP request to the IP address for greatrecipesforme.com.</li>
+    </ul>
+    A senior analyst confirms that the website was compromised. The analyst checks the source code for the 
+    website. They notice that javascript code had been added to prompt website visitors to download an 
+    executable file. Analysis of the downloaded file found a script that redirects the visitors’ browsers 
+    from yummyrecipesforme.com to greatrecipesforme.com.</p>
+
+    <p>The cybersecurity team reports that the web server was impacted by a brute force attack. The 
+        disgruntled hacker was able to guess the password easily because the admin password was still 
+        set to the default password. Additionally, there were no controls in place to prevent a brute 
+        force attack.</p>
+
+    <p>My job is to document the incident in detail, including identifying the network protocols used 
+        to establish the connection between the user and the website.  You should also recommend a security 
+        action to take to prevent brute force attacks in the future.</p>
+  
 </div>
 
+<!-- Attack Type Identified -->
+<h4 class="section-title">Attack Type Identified</h4>
+    <p><strong>Brute Force Attack (Credential Compromise)</strong></p>
+    <p>The investigation determined that the attacker gained unauthorized access to the website’s 
+        administrative panel by repeatedly attempting default credentials until the correct password was 
+        discovered. After obtaining access, the attacker modified the website’s source code and inserted 
+        malicious JavaScript that prompted users to download an executable file containing malware.</p>
 
-    <h4 class="section-title">Cybersecurity Incident Report Network Traffic Analysis</h4>
-   <div class="row g-4">
+<!-- Evidence -->
+<h4 class="section-title">tcpdump log files</h4>
+  <div class="row g-4">
   <div class="col-md-10">
     <div class="img-container cyber-card">
-      <img src="assets/Cybersecurity Incident Report Network Traffic Analysis.png"
+      <img src="assets/tcpdump evidence.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Evidence">
+    </div>
+       <p class="mt-2 text-center"><i>The tcpdump log shows the source IP sending a DNS request to 
+        resolve yummyrecipesforme.com, followed by an HTTP connection to the destination IP. 
+        The traffic later shows another DNS request redirecting the source IP to greatrecipesforme.com, 
+        indicating malicious redirection. </i></p>
+  </div>
+  </div>
+
+<!-- Security Incident Report -->
+<h4 class="section-title">Cybersecurity Incident Report OS Hardening Technique</h4>
+  <div class="row g-4">
+  <div class="col-md-10">
+    <div class="img-container cyber-card">
+      <img src="assets/OS Hardening Technique.png"
            class="img-fluid rounded"
            onclick="openImageModal(this.src)"
            alt="Incident Report">
     </div>
   </div>
-</div>
+  </div>
 
-  <hr class="section-divider">
+<hr class="section-divider">
 
 <!-- Activity / Findings -->
-  <h4 class="section-title">Activity Summary & Findings</h4>
-  <p>After reviewing the tcpdump logs, DNS queries and ICMP packets were identified within the captured network traffic. The analysis involved examining packet structure, identifying the protocols in use, and evaluating whether any traffic patterns indicated suspicious activity.
-</p>
+<h4 class="section-title">Activity Summary & Findings</h4>
+  <p>Captured network traffic using tcpdump revealed that the attacker gained admin access via a brute 
+    force attack on a default password, modified the website’s source code, and injected malicious JavaScript 
+    that prompted users to download malware. DNS and HTTP logs showed users were redirected to 
+    greatrecipesforme.com, confirming the compromise and malware distribution.</p>
 
-<p>
-This exercise demonstrated how cybersecurity analysts can inspect network traffic to better understand communication between systems and detect unusual behavior. By analyzing packet data and documenting findings, analysts provide valuable information that allows security engineers to investigate and resolve potential network issues.</p>
-
+<!-- Tools Used -->
 <h4 class="section-title">Tools Used</h4>
-<ul>
-<li><strong>tcpdump</strong> – Captured and analyzed network packets to observe DNS requests and ICMP responses.</li>
-<li><strong>Command-Line Interface (CLI)</strong> – Used to run tcpdump commands and review packet capture logs.</li>
-<li><strong>TCP/IP Protocol Analysis</strong> – Examined DNS and ICMP behavior at the network layer to identify communication issues.</li>
-</ul>
+  <ul>
+   <li>tcpdump – Captured and analyzed network traffic during the investigation</li>
+   <li>Sandbox environment – Safely observed the behavior of the suspicious website</li>
+   <li>TCP/IP protocol analysis – Identified DNS and HTTP communications involved in the attack</li>
+   <li>Web source code inspection – Identified malicious JavaScript embedded in the webpage</li>
+  </ul>
 
-<h4 class="section-title">Security Recommendations</h4>
-<ul>
-<li>Ensure DNS services are properly configured and actively running on UDP port 53.</li>
-<li>Implement continuous network monitoring to detect DNS service interruptions.</li>
-<li>Use firewall and network rules to verify that DNS traffic is not unintentionally blocked.</li>
-<li>Deploy logging and alerting systems to quickly identify DNS communication failures.</li>
-</ul>
-
-  <hr class="section-divider">
+<!-- Security Recommendation -->
+<h4 class="section-title">Security Recommendation</h4>
+  <ul>
+   <li>Account Lockout Policy: Limit failed login attempts to prevent brute force attacks.</li>
+   <li>Strong Passwords: Enforce complex, unique passwords instead of defaults.</li>
+   <li>Multi-Factor Authentication (MFA): Require an additional verification factor for admin access.</li>
+  </ul>
 
   <!-- PDF Resources -->
   <h4 class="section-title">Resources</h4>
   <div class="card p-4">
-    <a href="assets/Cybersecurity Incident Report Network Traffic Analysis.pdf" target="_blank" class="pdf-link">Cybersecurity Incident Report - Network Analysis (PDF)</a>
-    <a href="assets/tcpdump log.png" target="_blank" class="pdf-link">tcpdump log (PNG)</a>
+    <a href="assets/OS Hardening Technique.pdf" target="_blank" class="pdf-link">Cybersecurity Incident Report - OS Hardening (PDF)</a>
+    <a href="assets/tcpdump traffic log.pdf" target="_blank" class="pdf-link">tcpdump traffic log (PDF)</a>
+    <a href="assets/tcpdump evidence.png" target="_blank" class="pdf-link">tcpdump traffic log (PNG)</a>
   </div>
 
 </div>
