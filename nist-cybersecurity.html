@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Network Layer Communication | Dave Espinoza</title>
+  <title>NIST Cybersecurity Framework Analysis | Dave Espinoza</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -318,6 +318,7 @@
   transition: box-shadow 0.3s ease;
 }
 
+
   </style>
 </head>
 <body>
@@ -325,131 +326,175 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" href="network-scenarios.html">🔙 Network Security Incident Reports</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="network-attack.html">Network Attack</a></li>
-          <li class="nav-item"><a class="nav-link" href="os-hardening.html">OS Hardening Technique</a></li>
-          <li class="nav-item"><a class="nav-link" href="network-hardening.html">Network Hardening</a></li>
-        </ul>
-      </div>
+    <a class="navbar-brand" href="index.html #projects">🔙 Dave Portfolio</a>
+
   </div>
 </nav>
 
 <div class="container" style="padding-top: 20px;">
 
-  <h1 class="mb-4">Network Layer Communication Analysis</h1>
+  <h1 class="mb-4">NIST Cybersecurity Framework Analysis</h1>
 
-  <!-- Overview -->
-  <h4 class="section-title">Overview</h4>
-  <p>
-In this activity, you will analyze DNS and ICMP traffic in transit using data from a network protocol analyzer tool. You will identify which network protocol and service were impacted by the cybersecurity incident. 
-In the Internet layer of the TCP/IP model, IP formats data packets into IP datagrams, which provide security analysts with insight into potentially suspicious traffic. 
-</p>
-<p>
-Knowing how to identify potentially malicious traffic on a network helps cybersecurity analysts assess security risks and reinforce network security. 
-After analyzing the data, you will report your findings so that security engineers can take appropriate action.
-</p>
+<!-- Overview -->
+<h4 class="section-title">Overview</h4>
+  <p>This case study analyzes a simulated network security incident involving a Denial-of-Service (DoS) 
+    attack that disrupted internal network services. Using the NIST Cybersecurity Framework (CSF), the 
+    incident was evaluated to identify security gaps, assess risks, and develop strategies to strengthen 
+    the organization’s overall network security posture.</p>
 
-  <!-- Scope -->
- <h4 class="section-title">Scope</h4>
-<ul>
-<li>Analyze packet data captured from a network protocol analyzer.</li>
-<li>Identify which network protocols were involved in the incident.</li>
-<li>Review DNS and ICMP traffic for irregular patterns.</li>
-<li>Determine whether the activity indicated a potential network issue or security concern.</li>
-<li>Document findings and prepare a follow-up report.</li>
-</ul>
+<!-- Scope -->
+<h4 class="section-title">Scope</h4>
+  <p>This analysis focuses on a DoS attack caused by a flood of ICMP packets that overwhelmed the company’s 
+    network through a misconfigured firewall. The investigation applies the NIST CSF functions—Identify, 
+    Protect, Detect, Respond, and Recover to assess the incident and propose security improvements to reduce 
+    the risk of future attacks.</p>
 
-  <!-- Key Skills -->
-  <h4 class="section-title">Key Skills Demonstrated</h4>
-  <ul>
-   <li>Network traffic analysis</li>
-    <li>Understanding the Internet layer of the TCP/IP model</li>
-    <li>Protocol identification (DNS and ICMP)</li>
-    <li>Packet inspection using tcpdump logs</li>
-    <li>Incident assessment and documentation</li>
-  </ul>
+<!-- Incident Summary -->
+<h4 class="section-title">Incident Summary</h4>
+  <p>The organization experienced a Denial-of-Service (DoS) attack that disrupted internal network services 
+    for approximately two hours. The attack was caused by a flood of ICMP packets that overwhelmed the 
+    network through an unconfigured firewall. The incident response team mitigated the attack by blocking 
+    incoming ICMP traffic and restoring critical services while implementing additional monitoring and 
+    security controls.</p>
 
   <hr class="section-divider">
 
-<!-- Scenario -->
-  <h4 class="section-title">Scenario</h4>
-  <div class="card p-4 cyber-card">
-    <p>
-      <strong>This scenario is based on a fictional company:</strong><br><br>
-      You are a cybersecurity analyst working at a company that specializes in providing IT services for clients. Several customers of clients reported that they were not able 
-      to access the client company website www.yummyrecipesforme.com, and saw the error “destination port unreachable” after waiting for the page to load.</p>
+<!-- NIST Cybersecurity Framework Analysis -->
+<section class="container my-5">
 
-    <p>You are tasked with analyzing the situation and determining which network protocol was affected during this incident. To start, you attempt to visit the website and you also receive the error “destination port unreachable.” 
-        To troubleshoot the issue, you load your network analyzer tool, tcpdump, and attempt to load the webpage again. To load the webpage, 
-        your browser sends a query to a DNS server via the UDP protocol to retrieve the IP address for the website's domain name; this is part of the DNS protocol. 
-        Your browser then uses this IP address as the destination IP for sending an HTTPS request to the web server to display the webpage. 
-        The analyzer shows that when you send UDP packets to the DNS server, you receive ICMP packets containing the error message: “udp port 53 unreachable.” 
+  <div class="text-center mb-5">
+    <h2 class="text-white">NIST Cybersecurity Framework Analysis</h2>
+    <p class="text-secondary">
+      Security incident analysis using the five core functions of the NIST Cybersecurity Framework.
+    </p>
   </div>
 
+  <div class="row g-4">
 
-  <h4 class="section-title">tcpdump log</h4>
-   <div class="row g-4">
-  <div class="col-md-10 mx-auto">
-    <div class="img-container cyber-card">
-      <img src="assets/tcpdump log.png"
-           class="img-fluid"
-           onclick="openImageModal(this.src)"
-           alt="tcpdump Evidence">
+    <!-- Identify -->
+    <div class="col-md-4">
+      <div class="card cyber-card border-secondary h-100">
+        <div class="card-body">
+          <h5 class="text-info">Identify:</h5>
+          <p class="text-light">
+            The organization’s internal network is a critical asset supporting business operations. 
+            A misconfigured firewall allowed excessive ICMP traffic, which a malicious actor exploited to 
+            launch a DoS attack, preventing normal traffic from accessing essential resources.</p>
+        </div>
+      </div>
     </div>
-    <p class="mt-2 text-center"><i>The tcpdump log shows a request from a source IP address to the DNS server attempting to resolve the IP address of yummyrecipesforme.com. The server responds with an ICMP error message stating “UDP port 53 unreachable.”</p></i>
+
+    <!-- Protect -->
+    <div class="col-md-4">
+      <div class="card cyber-card border-secondary h-100">
+        <div class="card-body">
+          <h5 class="text-info">Protect:</h5>
+          <p class="text-light">
+            Firewall rules were updated to limit ICMP traffic and perform source IP verification. 
+            Network monitoring software and an IDS/IPS were deployed to filter suspicious traffic, 
+            strengthen defenses, and reduce the risk of future attacks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detect -->
+    <div class="col-md-4">
+      <div class="card cyber-card border-secondary h-100">
+        <div class="card-body">
+          <h5 class="text-info">Detect:</h5>
+          <p class="text-light">
+            Network monitoring and IDS/IPS continuously analyze traffic patterns, helping the team quickly 
+            identify abnormal spikes or suspicious activity. These tools enable faster detection of DoS attempts 
+            before they severely impact operations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Respond -->
+    <div class="col-md-6">
+      <div class="card cyber-card border-secondary h-100">
+        <div class="card-body">
+          <h5 class="text-info">Respond:</h5>
+          <p class="text-light">
+            The incident management team blocked incoming ICMP traffic and temporarily took non-critical 
+            services offline to contain the attack. Critical services were restored first, minimizing 
+            business disruption while mitigating the threat.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recover -->
+    <div class="col-md-6">
+      <div class="card cyber-card border-secondary h-100">
+        <div class="card-body">
+          <h5 class="text-info">Recover:</h5>
+          <p class="text-light">
+            Normal operations were restored in stages, prioritizing critical services. Post-incident 
+            improvements, including firewall adjustments, IP verification, monitoring, and IDS/IPS 
+            deployment, enhance resilience against future DoS attacks.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
+  <hr class="section-divider">
 
-    <h4 class="section-title">Cybersecurity Incident Report Network Traffic Analysis</h4>
+<!-- Incident Report Analysis 1 -->
+<h4 class="section-title">NIST CSF Analysis: Summary & Early Phases</h4>
    <div class="row g-4">
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/Cybersecurity Incident Report Network Traffic Analysis.png"
+      <img src="assets/Incident Report 1.png"
            class="img-fluid rounded"
            onclick="openImageModal(this.src)"
-           alt="Incident Report">
+           alt="Incident Report 1">
     </div>
   </div>
 </div>
+<p class="mt-2 text-center"><i>Overview of the incident, critical asset identification, and protective 
+    measures implemented to mitigate the DoS attack.</p></i>
+ 
+<!-- Incident Report Analysis 2 -->
+<h4 class="section-title">NIST CSF Analysis: Detection, Response & Recovery</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Incident Report 2.png"
+           class="img-fluid rounded"
+           onclick="openImageModal(this.src)"
+           alt="Incident Report 2">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i>Incident detection, response actions, recovery steps, and key lessons 
+    learned to strengthen network security.</p></i>
 
   <hr class="section-divider">
 
-<!-- Activity / Findings -->
-  <h4 class="section-title">Activity Summary & Findings</h4>
-  <p>After reviewing the tcpdump logs, DNS queries and ICMP packets were identified within the captured network traffic. The analysis involved examining packet structure, identifying the protocols in use, and evaluating whether any traffic patterns indicated suspicious activity.
-</p>
+  <!-- Security Improvements -->
+<h4 class="section-title">Security Improvements</h4>
+  <ul>
+    <li>Implement firewall rate limiting for ICMP traffic</li>
+    <li>Enable source IP verification to detect spoofed packets</li>
+    <li>Deploy IDS/IPS for real-time threat detection</li>
+    <li>Use network monitoring tools to identify abnormal traffic patterns</li>
+  </ul>
 
-<p>
-This exercise demonstrated how cybersecurity analysts can inspect network traffic to better understand communication between systems and detect unusual behavior. By analyzing packet data and documenting findings, analysts provide valuable information that allows security engineers to investigate and resolve potential network issues.</p>
-
-<h4 class="section-title">Tools Used</h4>
-<ul>
-<li><strong>tcpdump</strong> – Captured and analyzed network packets to observe DNS requests and ICMP responses.</li>
-<li><strong>Command-Line Interface (CLI)</strong> – Used to run tcpdump commands and review packet capture logs.</li>
-<li><strong>TCP/IP Protocol Analysis</strong> – Examined DNS and ICMP behavior at the network layer to identify communication issues.</li>
-</ul>
-
-<h4 class="section-title">Security Recommendations</h4>
-<ul>
-<li>Ensure DNS services are properly configured and actively running on UDP port 53.</li>
-<li>Implement continuous network monitoring to detect DNS service interruptions.</li>
-<li>Use firewall and network rules to verify that DNS traffic is not unintentionally blocked.</li>
-<li>Deploy logging and alerting systems to quickly identify DNS communication failures.</li>
-</ul>
-
-  <hr class="section-divider">
+<!-- Reflection / Lessons Learned -->
+<h4 class="section-title">Reflection / Lessons Learned</h4>
+  <p>This incident demonstrates how a simple firewall misconfiguration can create a significant vulnerability, 
+    allowing attackers to disrupt network operations. The DoS attack highlights the importance of proper 
+    firewall configuration, continuous network monitoring, and layered security controls. Implementing 
+    IDS/IPS and traffic monitoring improves detection and response capabilities. Proactive security 
+    practices are essential to prevent similar attacks in the future.</p>
 
   <!-- PDF Resources -->
   <h4 class="section-title">Resources</h4>
   <div class="card p-4">
-    <a href="assets/Cybersecurity Incident Report Network Traffic Analysis.pdf" target="_blank" class="pdf-link">Cybersecurity Incident Report - Network Analysis (PDF)</a>
-    <a href="assets/tcpdump log.png" target="_blank" class="pdf-link">tcpdump log (PNG)</a>
+    <a href="assets/Incident report analysis (NIST CSF).pdf" target="_blank" class="pdf-link">Incident report analysis - NIST CSF (PDF)</a>
+    <a href="assets/Incident report analysis (NIST CSF).docx" target="_blank" class="pdf-link">Incident report analysis - NIST CSF (Word)</a>
+    <a href="assets/Applying NIST CSF.pdf" target="_blank" class="pdf-link">Applying NIST CSF (PDF)</a>
   </div>
 
 </div>
@@ -481,8 +526,7 @@ This exercise demonstrated how cybersecurity analysts can inspect network traffi
 <!-- Footer -->
 <footer class="footer">
   <div class="container text-center">
-    <a href="network-scenarios.html" class="btn-cyber">🔙 Network Security Incident Reports</a>
-    <a href="index.html" class="btn-cyber">🔙 Dave Portfolio</a>
+    <a href="index.html #projects" class="btn-cyber">🔙 Dave Portfolio</a>
     <p class="mt-3">© 2026 Dave Espinoza</p>
   </div>
 </footer>

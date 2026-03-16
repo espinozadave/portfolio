@@ -37,6 +37,10 @@
         background-color: #1e1e1e;
         color: #f5f5f5;
         border: 1px solid #333; }
+      .card-img-top {
+        height: 250px;
+        object-fit: cover;
+}
  /* Make table text white */
       .table,
       .table th,
@@ -417,7 +421,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand">Dave Portfolio</a>
+      <a class="navbar-brand">🏠 Dave Portfolio</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -593,38 +597,54 @@
 <section id="projects" class="projects py-1">
   <div class="container">
     <h2 class="text-center mb-5">Case Studies & Projects</h2>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-
-      <!-- Internal Security Audit Case Study -->
-      <div class="col">
-        <div class="card cyber-card h-100 shadow-sm border-secondary">
-          <img src="assets/Botium-Toys Scope-Goals-and-Risk-Assessment-Report.png" class="card-img-top" alt="Internal Audit Screenshot">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-white">Internal Security Audit</h5>
-            <p class="card-text text-light flex-grow-1">
-              Conducted a scenario-based internal security audit for a fictional company, identifying risks, evaluating controls, and assessing compliance against NIST CSF, SP 800-53, CIA Triad, and OWASP principles.
-            </p>
-            <a href="internal-security.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
-          </div>
-        </div>
+    <!-- Row 1: Top two projects -->
+<div class="row g-4">
+  <!-- Internal Security Audit Case Study -->
+  <div class="col-md-6">
+    <div class="card cyber-card h-100 shadow-sm border-secondary">
+      <img src="assets/security audit background.jpg" class="card-img-top" alt="Internal Audit Screenshot">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-white">Internal Security Audit</h5>
+        <p class="card-text text-light flex-grow-1">
+          Conducted a scenario-based internal security audit for a fictional company, identifying risks, evaluating controls, and assessing compliance against NIST CSF, SP 800-53, CIA Triad, and OWASP principles.
+        </p>
+        <a href="internal-security.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
       </div>
-
-      <!-- Network Security Scenarios -->
-      <div class="col">
-        <div class="card cyber-card h-100 shadow-sm border-secondary">
-          <img src="assets/tcpdump log.png" class="card-img-top" alt="Project Placeholder">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title text-white">Network Security Incident Reports</h5>
-            <p class="card-text text-light flex-grow-1">
-              This page showcases scenario-based exercises from my Connect and Protect: Networks and Network Security course. Here, I created cybersecurity incident reports for various network scenarios, such as DoS attacks, DNS server outages, and more. 
-              These exercises helped me develop practical skills in identifying, analyzing, and documenting security incidents.
-            </p>
-            <a href="network-scenarios.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
-          </div>
-        </div>
-      </div>
-
     </div>
+  </div>
+
+  <!-- Network Security Scenarios -->
+  <div class="col-md-6">
+    <div class="card cyber-card h-100 shadow-sm border-secondary">
+      <img src="assets/network security background.jpg" class="card-img-top" alt="Project Placeholder">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-white">Network Security Incident Reports</h5>
+        <p class="card-text text-light flex-grow-1">
+          This page showcases scenario-based exercises from my Connect and Protect: Networks and Network Security course. Here, I created cybersecurity incident reports for various network scenarios, such as DoS attacks, DNS server outages, and more. 
+          These exercises helped me develop practical skills in identifying, analyzing, and documenting security incidents.
+        </p>
+        <a href="network-scenarios.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Row 2: Bottom single project centered -->
+<div class="row g-4 justify-content-center mt-4">
+  <div class="col-md-6">
+    <div class="card cyber-card h-100 shadow-sm border-secondary">
+      <img src="assets/nist csf wallpaper.png" class="card-img-top" alt="NIST CSF Wallpaper">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-white">NIST Cybersecurity Framework Analysis</h5>
+        <p class="card-text text-light flex-grow-1">
+          Analyzed a simulated network incident using the NIST Cybersecurity Framework (CSF) to identify risks, 
+          improve defenses, and develop a structured incident response strategy.
+        </p>
+        <a href="nist-cybersecurity.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 </section>
 <hr class="section-divider">
