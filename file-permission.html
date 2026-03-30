@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linux permissions management | Dave Espinoza</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+    a { color: #66b2ff; }
+    a:hover { color: #99ccff; }
+
+    .section-title {
+      border-left: 4px solid #0d6efd;
+      padding-left: 10px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      color: #f5f5f5;
+    }
+
+    .pdf-link {
+      display: block;
+      margin: 8px 0;
+      padding: 6px 12px;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #66b2ff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .pdf-link:hover { color: #fff; background-color: #0d6efd; }
+
+    .btn-cyber {
+      background: transparent;
+      border: 2px solid #0d6efd;
+      color: #0d6efd;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+    .btn-cyber:hover {
+      background: #0d6efd;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(13,110,253,0.6);
+    }
+
+    .footer {
+      background: #1f1f1f;
+      color: #f5f5f5;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+ #topBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  border: none;
+  outline: none;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 999;
+  display: none; /* hidden until scroll */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#topBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #0d6efd,
+              0 0 20px #0d6efd,
+              0 0 30px #0d6efd,
+              0 0 40px #0d6efd;
+  animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px #0d6efd,
+                0 0 20px #0d6efd,
+                0 0 30px #0d6efd,
+                0 0 40px #0d6efd;
+  }
+  100% {
+    box-shadow: 0 0 20px #0d6efd,
+                0 0 40px #0d6efd,
+                0 0 60px #0d6efd,
+                0 0 80px #0d6efd;
+  }
+}
+   .section-divider {
+  border: none;
+  height: 2px;
+  width: 60%;
+  margin: 60px auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0d6efd,
+    #66b2ff,
+    #0d6efd,
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: scanLine 3s linear infinite;
+  box-shadow: 0 0 10px #0d6efd;
+}
+
+@keyframes scanLine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+/* Cyber Glow Card Effect */
+.cyber-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 15px rgba(13,110,253,0.6),
+    0 0 30px rgba(13,110,253,0.3),
+    0 0 45px rgba(13,110,253,0.2);
+  transition: opacity 0.3s ease;
+}
+
+.cyber-card:hover::before {
+  opacity: 1;
+}
+
+.cyber-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 25px rgba(13,110,253,0.5),
+    0 0 50px rgba(13,110,253,0.3);
+}
+
+/* Image hover glow */
+.img-container img {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-container img:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 20px #0d6efd,
+    0 0 40px #0d6efd,
+    0 0 60px #0d6efd;
+}
+/* Modal close button */
+.btn-close-custom {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  z-index: 1050;
+}
+
+.btn-close-custom:hover {
+  box-shadow:
+    0 0 10px rgba(220,53,69,0.7),
+    0 0 20px rgba(220,53,69,0.4);
+}
+/* Evidence Modal Background */
+.evidence-modal {
+  background-color: #0b0b0b;
+  border: 1px solid #0d6efd;
+  box-shadow:
+    0 0 20px rgba(13,110,253,0.6),
+    0 0 40px rgba(13,110,253,0.3);
+}
+
+/* Evidence Header */
+.evidence-header {
+  padding: 10px 15px;
+  border-bottom: 1px solid #0d6efd;
+  font-weight: bold;
+  color: #66b2ff;
+  letter-spacing: 1px;
+}
+
+/* Image container */
+.evidence-container {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Evidence image */
+.evidence-image {
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom effect */
+.evidence-image:hover {
+  transform: scale(1.05);
+}
+
+/* Close button */
+.btn-close-custom {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-close-custom:hover {
+  box-shadow:
+    0 0 10px rgba(220,53,69,0.7),
+    0 0 20px rgba(220,53,69,0.4);
+}
+/* Make image glow hug the image exactly */
+.img-container.cyber-card {
+  position: relative;
+  display: inline-block; /* shrink to image size */
+  overflow: hidden;
+  border-radius: 0; /* match image edge */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-container.cyber-card::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* cover full container */
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 20px rgba(13,110,253,0.6),
+    0 0 40px rgba(13,110,253,0.3),
+    0 0 60px rgba(13,110,253,0.2);
+  transition: opacity 0.3s ease;
+}
+
+.img-container.cyber-card:hover::before {
+  opacity: 1;
+}
+
+.img-container.cyber-card img:hover {
+  transform: scale(1.02);
+}
+/* Navbar link glow on hover */
+.navbar .nav-link {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #0d6efd; /* glowing color */
+  text-shadow: 0 0 5px #0d6efd,
+               0 0 10px #0d6efd,
+               0 0 15px #0d6efd;
+}
+
+/* Navbar background glow effect */
+.navbar:hover {
+  box-shadow: 0 0 15px rgba(13, 110, 253, 0.6),
+              0 0 30px rgba(13, 110, 253, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Smooth transition back when not hovered */
+.navbar {
+  transition: box-shadow 0.3s ease;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="index.html#projects">🔙 Dave Portfolio</a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top: 20px;">
+
+  <h1 class="mb-4">Linux permissions management</h1>
+ 
+  <!-- Overview -->
+  <h4 class="section-title">Overview</h4>
+  <p>This project demonstrates the process of reviewing and securing Linux file and directory permissions 
+    to enforce proper authorization. I analyzed permission settings, identified misconfigured access, and 
+    applied corrective actions to restrict unauthorized users and protect sensitive data.</p>
+
+  <!-- Scope -->
+ <h4 class="section-title">Scope</h4>
+<ul>
+<li>Examined file and directory permissions using <i><b>ls -la</i></b></li>
+<li>Interpreted the 10-character Linux permission string</li>
+<li>Identified files with unauthorized write access</li>
+<li>Modified permissions using <i><b>chmod</b></i> to enforce least privilege</li>
+<li>Secured hidden archived files from modification</li>
+<li>Restricted directory access to authorized users only</li>
+<li>Verified all changes by rechecking permission settings</li>
+</ul>
+
+  <!-- Project Descrption -->
+  <h4 class="section-title">Project Descrption</h4>
+  <p>As a security professional supporting a research team, I reviewed and managed Linux file
+    system permissions to ensure users were granted appropriate access. I examined existing
+    permissions, identified mismatches with required authorization, and modified them to remove
+    unauthorized access. Using commands such as ls -la and chmod, I verified and enforced
+    proper access controls to help maintain system security and protect sensitive research data.</p>
+
+<!-- Scenario -->
+  <h4 class="section-title">Scenario</h4>
+  <div class="card p-4 cyber-card">
+    <p>
+      <strong>This scenario is based on a fictional company:</strong><br><br>
+      You are a security professional at a large organization. You mainly work with their research team. 
+      Part of your job is to ensure users on this team are authorized with the appropriate permissions. 
+      This helps keep the system secure.</p>
+    <p>
+      Your task is to examine existing permissions on the file system. You’ll need to determine if the 
+      permissions match the authorization that should be given. If they do not match, you’ll need to modify 
+      the permissions to authorize the appropriate users and remove any unauthorized access.</p>
+  </div>
+
+  <hr class="section-divider">
+
+    <!-- File & Directory Inspection -->
+  <h4 class="section-title">File & Directory Inspection</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/show the list of permission.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="check the permission">
+    </div>
+  </div>
+</div>
+  <p>I first verified that the projects directory existed by using the <b><i>ls</i></b> command to list available
+    directories. After confirming its presence, I navigated to the directory using cd projects.</p>
+
+  <p>Within the directory, I ran <b><i>ls -la</i></b> to display detailed information for all files and subdirectories,
+    including hidden items. This command provided the permission settings for each file and
+    directory, represented by a <b>10-character permission string</b>, which identifies the access levels
+    for the user, group, and others. The screenshot below shows the result of the command
+    executed.</p>
+
+  <!-- Understanding Linux Permission String -->
+  <h4 class="section-title">Understanding Linux Permission String</h4>
+  <p>Linux file permissions are displayed as a <b>10-character string</b>, such as drwxrwxrwx, which
+     defines the access level for different users.</p>
+<ul>
+<li><strong>First character</strong> -- Identifies the file type. A <b><i>d</i></b> represents a directory, while a - 
+    indicates a regular file. Other symbols may appear for special file types, such as links.</li>
+<li><strong>Character 2-4</strong> -- Represent the permissions assigned to the <b>owner (user)</b>. These
+    include read (r), write (w), and execute (x). A hyphen (-) in any position means that
+    specific permission is not granted.</li>
+<li><Strong>Characters 5–7</Strong> -- Define the permissions for the <b>group</b>. These follow the same read,
+    write, and execute structure and determine what members of the file’s group are allowed to do.</li>
+<li><strong>Characters 8–10</strong> -- Specify permissions for <b>others</b>, which include all users who are not
+    the owner and not part of the group. These permissions control general access to the file or directory.</li>
+</ul>
+  <p>In addition to the permission string, the expanded directory listing also displays ownership
+    details. The <b>second column</b> shows the user who owns the file, while the <b>third column</b>
+    identifies the group that owns it. Understanding both permissions and ownership is important
+    for properly managing access control in Linux systems.</p>
+
+  <hr class="section-divider">
+
+    <!-- Restricting File Permissions -->
+  <h4 class="section-title">Restricting File Permissions</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Changed file permission to other.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Changed file permission to other">
+    </div>
+  </div>
+</div>
+  <p>To strengthen system security, I reviewed file permissions to identify any unauthorized access.
+    Specifically, I checked whether any files in the projects directory allowed <b>others</b> to have write
+    permissions.</p>
+
+  <p>Using the <b><i>ls -la</i></b> command, I examined the permission settings and discovered that project_k.txt granted 
+    write access to others, which posed a security risk. To remove this unauthorized permission, I 
+    executed: <b><i>chmod o-w project_k.txt</i></b></p>
+
+  <p>This command removed the write permission for others while keeping the existing permissions for the 
+    user and group unchanged. I then ran <b><i>ls -la</i></b> again to verify that the changes were successfully applied 
+    and that write access for others had been removed. The screenshot above shows the result of the command 
+    executed.</p><br><br><br>
+
+  
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Change permission to group.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Change permission to group">
+    </div>
+  </div>
+</div>
+<p>The file project_m.txt is considered a restricted file and should only be accessible by the user. The 
+    group and others should not have read or write permissions.</p>
+
+<p>I reviewed the current permissions using <b><i>ls -la</i></b> and observed that the group had read access
+    to project_m.txt, which did not align with the required authorization. To remove this
+    incorrect permission, I executed: <b><i>chmod g-r project_m.txt</i></b></p>
+
+<p>This command removed the read permission for the group. I then ran <b><i>ls -la</i></b> again to verify
+    that the permission change was successfully applied and that only the user retained access to
+    the file. The screenshot above shows the result of the command executed.</p>
+
+  <hr class="section-divider">
+
+    <!-- Securing Hidden Files -->
+  <h4 class="section-title">Securing Hidden Files</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Change permission to hidden file.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Change permission to hidden file">
+    </div>
+  </div>
+</div>
+<p>To further reduce unauthorized access, I reviewed the permissions of hidden files within the directory. 
+    The file .project_x.txt is an archived hidden file and should not be modified. However, both the user 
+    and group should retain read access.</p>
+
+<p>Using <b><i>ls -la</i></b>, I observed that both the user and group had write permissions, which did 
+    not align with the required access controls. To correct this, I executed: <b><i>chmod u-w,g-w,g+r 
+    .project_x.txt</i></b></p>
+
+<p>This command removed write permissions for both the user and group while ensuring read
+    access remained intact. I then ran <b><i>ls -la</i></b> again to verify that the changes were successfully
+    applied and that the file permissions reflected the intended restrictions. The screenshot above
+    shows the result of the command executed</p>
+
+<hr class="section-divider">
+
+    <!-- Restricting Directory Access -->
+  <h4 class="section-title">Restricting Directory Access</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Change permission to draft.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Change permission to draft">
+    </div>
+  </div>
+</div>
+<p>In this task, I reviewed the permissions of the drafts subdirectory within
+    /home/researcher2/projects. Only the <b>researcher2</b> user should have access to this directory,
+    meaning that only the user should retain execute privileges.</p>
+
+<p>After checking the current permissions using <b><i>ls -la</i></b>, I observed that the group had execute
+    access to the drafts directory, which was not authorized. To restrict this access, I executed:
+    <b><i>chmod g-x drafts/</i></b></p>
+
+<p>This command removed the execute permission from the group. I then ran <b><i>ls -la</i></b> again to
+    verify that the change was successfully applied and that only the authorized user retained
+    access to the directory. The screenshot above shows the result of the command executed.</p>
+
+<hr class="section-divider">
+
+  <!-- Summary -->
+  <h4 class="section-title">Summary</h4>
+  <p>I reviewed and corrected Linux file and directory permissions to ensure proper authorization
+    and prevent unauthorized access. Using <b><i>ls -la</i></b>, I examined existing permissions, including
+    hidden files, and interpreted the 10-character permission string to identify misconfigured
+    access levels.</p>
+
+  <p>I applied <b><i>chmod</i></b> to remove unnecessary write and execute permissions, restrict access to
+    sensitive files, secure hidden archived content, and ensure only authorized users could access
+    critical directories. Each modification was validated by rechecking permissions to confirm the
+    changes.</p>
+
+  <p>These actions strengthened access control, reduced security risks, and ensured that files and
+    directories followed the principle of least privilege.</p>
+
+<hr class="section-divider">
+
+  <!-- PDF Resources -->
+  <h4 class="section-title">Evidence</h4>
+  <div class="card p-4">
+    <p>👉 Full Report in PDF and Screenshots</p>
+    <a href="assets/File permissions in Linux.pdf" target="_blank" class="pdf-link">Full Report (PDF)</a>
+    <a href="assets/show the list of permission.png" target="_blank" class="pdf-link">Show the list of permission (PNG)</a>
+    <a href="assets/Changed file permission to other.png" target="_blank" class="pdf-link">Changed file permission to other (PNG)</a>
+    <a href="assets/Change permission to group.png" target="_blank" class="pdf-link">Change permission to group (PNG)</a>
+    <a href="assets/Change permission to hidden file.png" target="_blank" class="pdf-link">Change permission to hidden file (PNG)</a>
+    <a href="assets/Change permission to draft.png" target="_blank" class="pdf-link">Change permission to draft directory (PNG)</a>
+  </div>
+
+</div>
+
+<!-- Top button with glow -->
+<button onclick="scrollToTop()" id="topBtn" class="btn-glow" title="Back to top">⬆</button>
+
+<!-- Evidence Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content evidence-modal">
+
+      <button type="button" class="btn-close-custom" onclick="closeImageModal()">✕</button>
+
+      <div class="evidence-header">
+        🔍 Evidence Viewer
+      </div>
+
+      <div class="evidence-container">
+        <img id="modalImage" src="" class="img-fluid evidence-image">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container text-center">
+    <a href="index.html#projects" class="btn-cyber">🔙 Dave Portfolio</a>
+    <p class="mt-3">© 2026 Dave Espinoza</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+
+function openImageModal(src) {
+  document.getElementById("modalImage").src = src;
+  imageModal.show();
+}
+
+function closeImageModal() {
+  imageModal.hide();
+}
+
+  // Smooth scroll to top
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Show/hide top button on scroll
+  window.onscroll = function () {
+    document.getElementById("topBtn").style.display =
+      document.documentElement.scrollTop > 200 ? "block" : "none";
+  };
+</script>
+</body>
+</html>

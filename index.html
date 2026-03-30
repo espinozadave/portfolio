@@ -9,6 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
       body {
+        margin: 0;
         padding-top: 70px;
         background-color: #121212; /* dark page background */
         color: #f5f5f5; /* light text for readability */
@@ -28,11 +29,18 @@
         padding: 50px 0;
         background-color: #121212; /* dark background */
         color: #f5f5f5; }
+      /* Footer full-width */
       .footer {
-        background: #1f1f1f; /* dark footer */
-        color: #f5f5f5; /* light text */
-        padding: 20px 0;
-        text-align: center; }
+        width: 100%;               /* full width */
+        background: #1f1f1f;       /* dark footer */
+        color: #f5f5f5;            /* light text */
+        padding: 1rem 0;            /* vertical spacing */
+        text-align: center;
+        margin: 100;                  /* remove any margin */
+        box-sizing: border-box;     /* include padding in width */
+        position: relative;         
+        left: 0;                    
+      }
       .card {
         background-color: #1e1e1e;
         color: #f5f5f5;
@@ -594,57 +602,116 @@
 <hr class="section-divider">
 
 
-<section id="projects" class="projects py-1">
+<!-- Home Lab Experience -->
+<section id="homelab" class="projects py-1">
   <div class="container">
-    <h2 class="text-center mb-5">Case Studies & Projects</h2>
+    <h2 class="text-center mb-1">Home Lab Experience</h2>
+    <p class="text-center text-light mb-5" style="max-width: 700px; margin: 0 auto;">
+      Demonstrates hands-on cybersecurity practice using industry tools to analyze threats, investigate 
+      network activity, and strengthen defensive security skills through practical lab environments.
+    </p>
     <!-- Row 1: Top two projects -->
 <div class="row g-4">
-  <!-- Internal Security Audit Case Study -->
+  <!-- Home Lab Case Study -->
   <div class="col-md-6">
     <div class="card cyber-card h-100 shadow-sm border-secondary">
-      <img src="assets/security audit background.jpg" class="card-img-top" alt="Internal Audit Screenshot">
+      <img src="assets/homelab wallpaper.jpg" class="card-img-top" alt="Internal Audit Screenshot">
       <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-white">Internal Security Audit</h5>
+        <h5 class="card-title text-white">Coming Soon</h5>
         <p class="card-text text-light flex-grow-1">
-          Conducted a scenario-based internal security audit for a fictional company, identifying risks, evaluating controls, and assessing compliance against NIST CSF, SP 800-53, CIA Triad, and OWASP principles.
+          Still in progress....
         </p>
-        <a href="internal-security.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+        <a href="#homelab" class="btn btn-outline-primary mt-auto" onclick="alert('Home Lab still in progress!')">View Home Lab</a>
       </div>
     </div>
   </div>
 
-  <!-- Network Security Scenarios -->
-  <div class="col-md-6">
-    <div class="card cyber-card h-100 shadow-sm border-secondary">
-      <img src="assets/network security background.jpg" class="card-img-top" alt="Project Placeholder">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-white">Network Security Incident Reports</h5>
-        <p class="card-text text-light flex-grow-1">
-          This page showcases scenario-based exercises from my Connect and Protect: Networks and Network Security course. Here, I created cybersecurity incident reports for various network scenarios, such as DoS attacks, DNS server outages, and more. 
-          These exercises helped me develop practical skills in identifying, analyzing, and documenting security incidents.
-        </p>
-        <a href="network-scenarios.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
-      </div>
-    </div>
-  </div>
-</div>
+<hr class="section-divider">
 
-<!-- Row 2: Bottom single project centered -->
-<div class="row g-4 justify-content-center mt-4">
-  <div class="col-md-6">
-    <div class="card cyber-card h-100 shadow-sm border-secondary">
-      <img src="assets/nist csf wallpaper.png" class="card-img-top" alt="NIST CSF Wallpaper">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-white">NIST Cybersecurity Framework Analysis</h5>
-        <p class="card-text text-light flex-grow-1">
-          Analyzed a simulated network incident using the NIST Cybersecurity Framework (CSF) to identify risks, 
-          improve defenses, and develop a structured incident response strategy.
-        </p>
-        <a href="nist-cybersecurity.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+<section id="projects" class="projects py-1">
+  <div class="container">
+    <h2 class="text-center mb-1">Case Studies & Projects</h2>
+    <p class="text-center text-light mb-5" style="max-width: 700px; margin: 0 auto;">
+       Showcases scenario-based cybersecurity projects, including incident reporting, security audits, Linux permissions 
+       management, and SQL data analysis, demonstrating practical skills in risk assessment, access control, and threat 
+       investigation.
+    </p>
+
+    <div class="row g-4">
+
+      <!-- Internal Security Audit -->
+      <div class="col-md-6">
+        <div class="card cyber-card h-100 shadow-sm border-secondary">
+          <img src="assets/security audit background.jpg" class="card-img-top" alt="Internal Audit Screenshot">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-white">Internal Security Audit</h5>
+            <p class="card-text text-light flex-grow-1">
+              Conducted a scenario-based internal security audit for a fictional company, identifying risks, evaluating controls, and assessing compliance against NIST CSF, SP 800-53, CIA Triad, and OWASP principles.
+            </p>
+            <a href="internal-security.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+          </div>
+        </div>
       </div>
+
+      <!-- Network Security Scenarios -->
+      <div class="col-md-6">
+        <div class="card cyber-card h-100 shadow-sm border-secondary">
+          <img src="assets/network security background.jpg" class="card-img-top" alt="Project Placeholder">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-white">Network Security Incident Reports</h5>
+            <p class="card-text text-light flex-grow-1">
+              This page showcases scenario-based exercises from my Connect and Protect: Networks and Network Security course.
+            </p>
+            <a href="network-scenarios.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Linux Permissions Management -->
+      <div class="col-md-6">
+        <div class="card cyber-card h-100 shadow-sm border-secondary">
+          <img src="assets/linux file permission.png" class="card-img-top" alt="Linux Permissions">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-white">Linux Permissions Management</h5>
+            <p class="card-text text-light flex-grow-1">
+              Reviewed and secured Linux file and directory permissions to enforce proper access control using ls -la and chmod.
+            </p>
+            <a href="file-permission.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NIST Cybersecurity Framework -->
+      <div class="col-md-6">
+        <div class="card cyber-card h-100 shadow-sm border-secondary">
+          <img src="assets/nist csf wallpaper.png" class="card-img-top" alt="NIST CSF Wallpaper">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-white">NIST Cybersecurity Framework Analysis</h5>
+            <p class="card-text text-light flex-grow-1">
+              Analyzed a simulated network incident using the NIST Cybersecurity Framework (CSF).
+            </p>
+            <a href="nist-cybersecurity.html" class="btn btn-outline-primary mt-auto">View Case Study</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NIST Cybersecurity Framework -->
+      <div class="col-md-6">
+        <div class="card cyber-card h-100 shadow-sm border-secondary">
+          <img src="assets/sql query wallpaper.jpg" class="card-img-top" alt="sql query wallpaper">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-white">SQL Filtering for Security Analysis</h5>
+            <p class="card-text text-light flex-grow-1">
+              Applied SQL filtering using AND, OR, and NOT operators to analyze employee and login data, identify potential security 
+              issues, and extract actionable insights to support cybersecurity investigations.
+            </p>
+             <a href="#projects" class="btn btn-outline-primary mt-auto" onclick="alert('Coming Soon.. Still in progress!')">View Case Study</a>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </div>
-</div>
+
   </div>
 </section>
 <hr class="section-divider">
@@ -716,16 +783,11 @@
   </div>
 </section>
 
-  <!-- Footer -->
-  <footer class="footer" id="contact">
-    <div class="container">
-      <p>© 2026 Dave Espinoza <br> Email: <a href="mailto:espinozadave@yahoo.com">
-        espinozadave@yahoo.com</a><br>
-        Contact #: 702-427-2944
-      </p>
-
-    </div>
-  </footer>
+<footer class="footer" id="contact">
+  © 2026 Dave Espinoza <br> 
+  Email: <a href="mailto:espinozadave@yahoo.com">espinozadave@yahoo.com</a><br>
+  Contact #: 702-427-2944
+</footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
