@@ -12,7 +12,16 @@
       background-color: #121212;
       color: #f5f5f5;
       font-family: Arial, sans-serif;
+      padding-top: 75px;
     }
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 70px;
+    }
+    section {
+         scroll-margin-top: 75px; 
+    }
+
     a { color: #66b2ff; }
     a:hover { color: #99ccff; }
 
@@ -318,17 +327,32 @@
   transition: box-shadow 0.3s ease;
 }
 
+
   </style>
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container">
     <a class="navbar-brand" href="index.html">🔙 Dave Portfolio</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+          <li class="nav-item"><a class="nav-link" href="#objective">Objective</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tools">Tools & Technologies</a></li>
+          <li class="nav-item"><a class="nav-link" href="#architecture">Lab Architecture</a></li>
+          <li class="nav-item"><a class="nav-link" href="#dashboard">Wazuh Dashboard Manager</a></li>
+          <li class="nav-item"><a class="nav-link" href="#attacker">Kali Attacker</a></li>
+          <li class="nav-item"><a class="nav-link" href="#logs">Logs Generated</a></li>
+          <li class="nav-item"><a class="nav-link" href="#findings">Findings</a></li>
+          <li class="nav-item"><a class="nav-link" href="#lessons">Lessons Learned</a></li>
+          <li class="nav-item"><a class="nav-link" href="#recommendation">Recommendations</a></li>
+        </ul>
+      </div>
   </div>
 </nav>
 
@@ -337,7 +361,7 @@
   <h1 class="mb-4">🔐 Home Lab Project: SIEM Monitoring & Brute-Force Attack Detection</h1>
 
   <!-- Overview -->
-  <h4 class="section-title">Overview</h4>
+  <h4 class="section-title" id="overview">Overview</h4>
   <p>This project demonstrates a simulated security operations environment using virtual machines to 
     emulate an attacker, a monitored endpoint, and a centralized SIEM server. The objective is to perform 
     a brute-force attack from an attacker machine and observe how security logs are generated, forwarded, 
@@ -355,7 +379,7 @@
   without external exposure.</p>
 
  <!-- Objective -->
-  <h4 class="section-title">Objective</h4>
+  <h4 class="section-title" id="objective">Objective</h4>
   <ul>
     <li>Simulate brute-force attack attempts from attacker machine</li>
     <li>Monitor security events generated on Windows endpoint</li>
@@ -364,7 +388,7 @@
   </ul>
 
    <!-- Tools & Technologies Used -->
-  <h4 class="section-title">Tools & Technologies Used</h4>
+  <h4 class="section-title" id="tools">Tools & Technologies Used</h4>
   <ul>
     <li>Wazuh – SIEM and host-based intrusion detection</li>
     <li>Ubuntu - Wazuh Manager</li>
@@ -373,19 +397,9 @@
     <li>Oracle VM VirtualBox – Virtualized lab environment</li>
   </ul>
 
-
-    <!-- Tools & Technologies Used -->
-  <h4 class="section-title">Tools & Technologies Used</h4>
-  <ul>
-    <li>Wazuh – SIEM and host-based intrusion detection</li>
-    <li>Ubuntu - Wazuh Manager</li>
-    <li>Windows 10 – Monitor Endpoint</li>
-    <li>Kali Linux – Attacker Machine</li>
-    <li>Oracle VM VirtualBox – Virtualized lab environment</li>
-  </ul>
+<hr class="section-divider">
   
-  
-<h4 class="section-title">Wazuh SIEM Home Lab Network Diagram</h4>
+<h4 class="section-title" id="architecture">Lab Architecture</h4>
    <div class="row g-4">
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
@@ -395,14 +409,165 @@
            alt="Wazuh Homelab Flowchart">
     </div>
   </div>
-</div>
-<p class="mt-2 text-center"><i>Network architecture of the SIEM home lab environment showing an attacker 
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/cybersecurity flow.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Cybersecurity Flow">
+    </div>
+  </div>
+<p class="mt-2 text-center"><i>Wazuh SIEM Home Lab Network Diagram and Attack Flow<br>
+      Network architecture of the SIEM home lab environment showing an attacker 
       system (Kali Linux), monitored endpoint (Windows with Wazuh agent), and centralized Wazuh server 
       (Ubuntu) communicating within an isolated internal network for brute-force attack detection and log 
       analysis.</p></i>
+  </div>
 
+<hr class="section-divider">
 
-  <hr class="section-divider">
+<h4 class="section-title" id="dashboard">Wazuh Manager Dashboard</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/homelab/Dashboard login and user.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Dashboard login and user">
+    </div>
+  </div>
+  <p class="mt-2 text-center"><i>Wazuh SIEM displaying filtered security events generated from failed login 
+    attempts and user account creation on Windows-agent.</p></i>
+  </div>
+
+<hr class="section-divider">
+
+<h4 class="section-title" id="attacker">Kali Attacker Setup</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/homelab/kali setup check port.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="kali setup check port">
+    </div>
+  </div>
+  <p class="mt-2 text-center"><i>Attacker reconnaissance phase showing connectivity verification and service 
+    enumeration. The Windows-agent (192.168.10.24) responds to ICMP, and Nmap confirms port 3389 (RDP) is 
+    open, indicating the target is reachable for brute-force simulation.</i></p>
+
+ <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/homelab/kali preparing for attack.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="kali preparing for attack">
+    </div>
+  </div>
+  <p class="mt-2 text-center"><i>Brute-force preparation and execution from Kali attacker. A custom 
+    password list was created and used with Hydra to perform an RDP brute-force attempt against 
+    Windows-agent (192.168.10.24).</i></p>
+
+  <p class="mt-2 text-center"><i>Successfully triggered a False Positive during an RDP brute-force 
+    simulation using Hydra. Although the password 'Password123' was incorrect, the service returned a 
+    'Not Authorized' flag rather than 'Access Denied.' This occurred because the target user 'homel' 
+    had not yet been added to the Remote Desktop Users group, causing Hydra to misidentify the permission 
+    error as a successful credential match.</i></p>
+  </div>
+
+<hr class="section-divider">
+
+<h4 class="section-title" id="logs">Logs Generated on Windows</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/homelab/Dashboard generated event.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Dashboard generated event">
+    </div>
+  </div>
+  <p class="mt-2 text-center"><i>Security events observed on the Wazuh manager (Ubuntu) confirming log 
+    generation from the Windows-agent following a simulated brute-force attack.</p></i>
+
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/homelab/summary of report.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="summary of report">
+    </div>
+  </div>
+  <p class="mt-2 text-center"><i>This log represents a telemetry capture of a failed authentication attempt. 
+    It shows that at 10:08 PM, a workstation named 'kali' (IP 192.168.10.8) attempted to log into the 
+    'homel' account on the Windows VM using the NTLM protocol. The Windows Security Auditing system 
+    intercepted the bad password, generated Event ID 4625, and the Wazuh agent immediately forwarded this 
+    data to the manager for analysis.</p></i>
+  </div>  
+
+<hr class="section-divider">
+
+<h4 class="section-title" id="findings">Findings (SIEM Home Lab — Brute-Force Attempt)</h4>
+<p><b>Incident Overview:</b>
+  <ul>
+    <li>Date: April 8, 2026</li>
+    <li>Time: 10:08 PM</li>
+    <li>Target: Windows VM (Wazuh Agent)</li>
+    <li>Attacker: Kali VM</li>
+    <li>Wazuh Manager: Ubuntu VM</li>
+  </ul>
+  <b>Event Summary:</b>
+  <ul>
+    <li>A brute-force login attempt was simulated from Kali (192.168.10.8) targeting the Windows machine 
+      (192.168.10.24).</li>
+    <li>The authentication attempts failed and did not result in unauthorized access.</li>
+    <li>The Windows endpoint generated security logs for each failed login attempt.</li>
+    <li>The Wazuh agent successfully forwarded these logs to the centralized Wazuh manager.</li>
+    <li>The Wazuh dashboard displayed alert details including source IP address, hostname, and event severity.</li>
+    <li>The SIEM correlated the failed login events and provided visibility into the attempted intrusion.</li>
+  </ul>
+</p>
+
+<hr class="section-divider">
+
+<h4 class="section-title" id="lessons">Lessons Learned</h4>
+<p>
+  <b>Importance of Agent Configuration:</b>
+  <ul>
+    <li>Proper configuration of the Wazuh agent on the Windows host ensured reliable log forwarding to the SIEM manager.</li>
+  </ul>
+  <b>Network Segmentation:</b>
+  <ul>
+    <li>Conducting the test within an isolated internal network allowed safe simulation of attack activity without 
+      external exposure.</li>
+  </ul>
+  <b>Detection Over Attack Success:</b>
+  <ul>
+    <li>Even though the brute-force attack failed, the SIEM successfully detected suspicious authentication attempts, 
+      demonstrating the value of proactive monitoring.</li>
+  </ul>
+  <b>Visibility and Incident Response Practice:</b>
+  <ul>
+    <li>Analyzing failed login events, source IP addresses, and hostnames provided hands-on experience in identifying and 
+      investigating security incidents.</li>
+  </ul>
+  <b>Centralized Log Monitoring:</b>
+  <ul>
+    <li>The lab highlighted the importance of centralized logging in improving detection and simplifying incident 
+      analysis across endpoints.</li>
+  </ul>
+</p>
+
+<hr class="section-divider">
+
+<h4 class="section-title" id="recommendation">Recommendations</h4>
+<ul>
+  <li>Implement account lockout policies to mitigate brute-force attacks.</li>
+  <li>Configure alert thresholds for repeated failed login attempts.</li>
+  <li>Enable additional log sources for broader visibility.</li>
+  <li>Integrate automated response actions for high-severity alerts.</li>
+</ul>
+
 
 </div>
 
@@ -462,6 +627,23 @@ function closeImageModal() {
     document.getElementById("topBtn").style.display =
       document.documentElement.scrollTop > 200 ? "block" : "none";
   };
+
+  // Select all links inside the navbar
+  const navLinks = document.querySelectorAll('.nav-link');
+  // Select the collapsible part of the navbar
+  const menuToggle = document.getElementById('navbarNav');
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      // Check if the menu is currently shown/expanded
+      if (menuToggle.classList.contains('show')) {
+        // Use Bootstrap's built-in collapse function to hide it
+        const bsCollapse = new bootstrap.Collapse(menuToggle);
+        bsCollapse.hide();
+      }
+    });
+  });
+
 </script>
 </body>
 </html>
