@@ -807,6 +807,22 @@ function closeModal() {
   document.getElementById("certFrame").src = "";
 }
 
+ // Select all links inside the navbar
+  const navLinks = document.querySelectorAll('.nav-link');
+  // Select the collapsible part of the navbar
+  const menuToggle = document.getElementById('navbarNav');
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      // Check if the menu is currently shown/expanded
+      if (menuToggle.classList.contains('show')) {
+        // Use Bootstrap's built-in collapse function to hide it
+        const bsCollapse = new bootstrap.Collapse(menuToggle);
+        bsCollapse.hide();
+      }
+    });
+  });
+
 // Close when clicking outside modal
 document.getElementById("certModal").onclick = closeModal;
 
