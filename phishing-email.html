@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phishing Email Investigation & Incident Response Analysis | Dave Espinoza</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+    a { color: #66b2ff; }
+    a:hover { color: #99ccff; }
+
+    .section-title {
+      border-left: 4px solid #0d6efd;
+      padding-left: 10px;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      color: #f5f5f5;
+    }
+
+    .pdf-link {
+      display: block;
+      margin: 8px 0;
+      padding: 6px 12px;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #66b2ff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .pdf-link:hover { color: #fff; background-color: #0d6efd; }
+
+    .btn-cyber {
+      background: transparent;
+      border: 2px solid #0d6efd;
+      color: #0d6efd;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: 0.3s ease;
+      display: inline-block;
+    }
+    .btn-cyber:hover {
+      background: #0d6efd;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(13,110,253,0.6);
+    }
+
+    .footer {
+      background: #1f1f1f;
+      color: #f5f5f5;
+      padding: 20px 0;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+ #topBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  border: none;
+  outline: none;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 999;
+  display: none; /* hidden until scroll */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#topBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #0d6efd,
+              0 0 20px #0d6efd,
+              0 0 30px #0d6efd,
+              0 0 40px #0d6efd;
+  animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px #0d6efd,
+                0 0 20px #0d6efd,
+                0 0 30px #0d6efd,
+                0 0 40px #0d6efd;
+  }
+  100% {
+    box-shadow: 0 0 20px #0d6efd,
+                0 0 40px #0d6efd,
+                0 0 60px #0d6efd,
+                0 0 80px #0d6efd;
+  }
+}
+   .section-divider {
+  border: none;
+  height: 2px;
+  width: 60%;
+  margin: 60px auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0d6efd,
+    #66b2ff,
+    #0d6efd,
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: scanLine 3s linear infinite;
+  box-shadow: 0 0 10px #0d6efd;
+}
+
+@keyframes scanLine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+/* Cyber Glow Card Effect */
+.cyber-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 15px rgba(13,110,253,0.6),
+    0 0 30px rgba(13,110,253,0.3),
+    0 0 45px rgba(13,110,253,0.2);
+  transition: opacity 0.3s ease;
+}
+
+.cyber-card:hover::before {
+  opacity: 1;
+}
+
+.cyber-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 25px rgba(13,110,253,0.5),
+    0 0 50px rgba(13,110,253,0.3);
+}
+
+/* Image hover glow */
+.img-container img {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-container img:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 0 20px #0d6efd,
+    0 0 40px #0d6efd,
+    0 0 60px #0d6efd;
+}
+/* Modal close button */
+.btn-close-custom {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  z-index: 1050;
+}
+
+.btn-close-custom:hover {
+  box-shadow:
+    0 0 10px rgba(220,53,69,0.7),
+    0 0 20px rgba(220,53,69,0.4);
+}
+/* Evidence Modal Background */
+.evidence-modal {
+  background-color: #0b0b0b;
+  border: 1px solid #0d6efd;
+  box-shadow:
+    0 0 20px rgba(13,110,253,0.6),
+    0 0 40px rgba(13,110,253,0.3);
+}
+
+/* Evidence Header */
+.evidence-header {
+  padding: 10px 15px;
+  border-bottom: 1px solid #0d6efd;
+  font-weight: bold;
+  color: #66b2ff;
+  letter-spacing: 1px;
+}
+
+/* Image container */
+.evidence-container {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Evidence image */
+.evidence-image {
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom effect */
+.evidence-image:hover {
+  transform: scale(1.05);
+}
+
+/* Close button */
+.btn-close-custom {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-close-custom:hover {
+  box-shadow:
+    0 0 10px rgba(220,53,69,0.7),
+    0 0 20px rgba(220,53,69,0.4);
+}
+/* Make image glow hug the image exactly */
+.img-container.cyber-card {
+  position: relative;
+  display: inline-block; /* shrink to image size */
+  overflow: hidden;
+  border-radius: 0; /* match image edge */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-container.cyber-card::before {
+  content: "";
+  position: absolute;
+  inset: 0; /* cover full container */
+  pointer-events: none;
+  opacity: 0;
+  box-shadow:
+    0 0 20px rgba(13,110,253,0.6),
+    0 0 40px rgba(13,110,253,0.3),
+    0 0 60px rgba(13,110,253,0.2);
+  transition: opacity 0.3s ease;
+}
+
+.img-container.cyber-card:hover::before {
+  opacity: 1;
+}
+
+.img-container.cyber-card img:hover {
+  transform: scale(1.02);
+}
+/* Navbar link glow on hover */
+.navbar .nav-link {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #0d6efd; /* glowing color */
+  text-shadow: 0 0 5px #0d6efd,
+               0 0 10px #0d6efd,
+               0 0 15px #0d6efd;
+}
+
+/* Navbar background glow effect */
+.navbar:hover {
+  box-shadow: 0 0 15px rgba(13, 110, 253, 0.6),
+              0 0 30px rgba(13, 110, 253, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Smooth transition back when not hovered */
+.navbar {
+  transition: box-shadow 0.3s ease;
+}
+
+.stage-title {
+  color: #00bfff;
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container d-flex justify-content-between">
+    <a class="navbar-brand" href="index.html#projects">
+      <i class="bi bi-arrow-left"></i> 🏠 Dave Portfolio
+    </a>
+
+    <a class="navbar-brand" href="case-studies.html">
+      View Case Studies & Projects 👀 <i class="bi bi-arrow-right"></i>
+    </a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top: 20px;">
+
+  <h1 class="mb-4">Phishing Email Investigation & Incident Response Analysis</h1>
+ 
+  <!-- Overview -->
+  <h4 class="section-title">Overview:</h4>
+  <p>This project simulates a phishing incident investigation within a fictional organization. As a 
+    SOC Analyst, I investigated a suspicious email containing a malicious attachment, analyzed 
+    indicators of compromise (IOCs) using VirusTotal, documented findings through an incident ticket, 
+    applied the Pyramid of Pain framework, and followed a phishing response playbook to guide containment 
+    and remediation activities.</p>
+
+  <!-- Objectives -->
+  <h4 class="section-title">Objectives:</h4>
+<ul>
+  <li>Investigate a phishing email containing a suspicious attachment.</li>
+  <li>Identify Indicators of Compromise (IOCs).</li>
+  <li>Assess potential business impact.</li>
+  <li>Document findings in an incident ticket.</li>
+  <li>Apply the Pyramid of Pain framework.</li>
+  <li>Follow a phishing incident response playbook.</li>
+  <li>Recommend containment and remediation actions.</li>
+</ul>
+
+  <!-- Scope -->
+ <h4 class="section-title">Scope:</h4>
+<ul>
+  <li>Email header review</li>
+  <li>Attachment analysis</li>
+  <li>IOC identification</li>
+  <li>VirusTotal investigation</li>
+  <li>Incident documentation</li>
+  <li>Response recommendations</li>
+</ul>
+
+  <!-- Tools & Technologies -->
+ <h4 class="section-title">Tools & Technologies:</h4>
+<ul>
+  <li>VirusTotal</li>
+  <li>MITRE ATT&CK</li>
+  <li>Pyramid of Pain</li>
+  <li>Incident Response Playbook</li>
+</ul>
+
+<!-- Scenario -->
+  <h4 class="section-title">Scenario:</h4>
+  <div class="card p-4 cyber-card">
+    <p>
+      <strong>This scenario is based on a fictional company:</strong><br><br>
+I'm a Level 1 Security Operations Center (SOC) Analyst at a financial services company that received an alert 
+indicating that a suspicious file had been downloaded onto an employee's workstation. Initial investigation 
+revealed that the employee had received a phishing email containing a password-protected spreadsheet 
+attachment. The password required to open the file was included within the email message itself.</p>
+
+<p>
+After downloading and opening the attachment, the employee entered the provided password, which triggered 
+the execution of a malicious payload on the system. The incident generated security alerts indicating 
+potential malicious activity on the endpoint.</p>
+
+<p>
+As part of the investigation, the suspicious file was collected and analyzed. A SHA256 file hash was 
+generated and submitted to threat intelligence sources to determine whether the file was known to be 
+malicious. Analysis confirmed that the attachment was associated with malicious activity.</p>
+
+<p>
+Following confirmation of the threat, the incident response process was initiated in accordance with 
+organizational security policies and phishing response procedures. The investigation focused on 
+identifying indicators of compromise (IOCs), assessing the potential impact, documenting findings 
+within the incident ticket, and recommending containment and remediation actions to resolve the incident.</p>
+
+</div>
+
+  <hr class="section-divider">
+
+
+    <!-- Investigation Process -->
+  <h4 class="section-title">Investigation Process:</h4>
+  <h5 class="stage-title">
+  <span class="text-primary">Step 1:</span> Initial Alert Review
+  </h5>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card d-flex justify-content-center align-items-center">
+      <img src="assets/Phishing Investigation/email.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Email">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 1. Phishing Email with Malicious Attachment:</b>
+Email received by an employee containing a password-protected spreadsheet attachment. The password was 
+included in the message, a common phishing technique used to bypass email security controls and encourage 
+execution of malicious files.
+</p></i><br>
+
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card d-flex justify-content-center align-items-center">
+      <img src="assets/Phishing Investigation/alert ticket 1.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Alert Ticket 1">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 2. Security Alert Generated from Suspicious File Activity:</b>
+Security alert created after the employee downloaded and opened the attachment. The alert initiated 
+the SOC investigation and triggered the incident response process for potential malware execution.
+</p></i><br>
+
+  <h5 class="stage-title">
+  <span class="text-primary">Step 2: </span> Attachment Analysis
+  </h5>
+
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card d-flex justify-content-center align-items-center">
+      <img src="assets/Phishing Investigation/File hash.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Alert Ticket 1">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 3. Attachment SHA256 Hash Used for Threat Intelligence Lookup:</b>
+The file hash (54e6ea47eb04634d3e87fd7787e2136ccfbcc80ade34f246a12cf93bab527f6b) was collected during the investigation and used to determine whether the attachment 
+had been previously identified as malicious by threat intelligence sources.
+</p></i><br>
+
+    <h5 class="stage-title">
+  VirusTotal Detection
+  </h5>
+     <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Phishing Investigation/Detection VirusTotal.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Detection">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 4. VirusTotal Detection Results:</b>
+VirusTotal analysis identified the attachment as malicious based on detections from multiple 
+security vendors. These findings validated the alert and confirmed that the file posed a security 
+risk requiring further investigation and response.
+</p></i><br>
+
+    <h5 class="stage-title">
+  VirusTotal File Details
+  </h5>
+     <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Phishing Investigation/Details VirusTotal.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Details">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 5. VirusTotal File Details and Metadata:</b>
+File metadata collected from VirusTotal, including hash values, file type, and other identifying 
+characteristics. This information was used to validate the artifact and support threat intelligence 
+analysis during the investigation.
+</p></i><br>
+
+    <h5 class="stage-title">
+  VirusTotal Related Indicators
+  </h5>
+     <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Phishing Investigation/Relations VirusTotal.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Relations">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 6. VirusTotal Related Indicators:</b>
+Related artifacts and infrastructure associated with the malicious file, including connected domains, 
+URLs, IP addresses, and other indicators of compromise (IOCs). These relationships help analysts identify 
+additional threats and assess the scope of potential compromise.
+</p></i><br>
+
+    <h5 class="stage-title">
+  VirusTotal Behavioral Analysis
+  </h5>
+     <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/Phishing Investigation/Behavior VirusTotal.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="behavior">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 7. VirusTotal Behavioral Analysis:</b>
+Behavioral analysis of the malicious attachment showing actions observed during execution. Findings 
+provide insight into the malware's capabilities and potential impact on affected systems, supporting 
+containment and remediation efforts.
+</p></i><br>
+
+  <h5 class="stage-title">
+  <span class="text-primary">Step 3:</span> Pyramid of Pain Analysis
+  </h5>    
+<p><b>Indicators of Compromise Identified:</b></p>
+<ul>
+  <li><b>SHA256 Hash:</b> VirusTotal identified the attachment as malicious, with 55 of 69 security vendors 
+    detecting the file as malware. The file was classified as a Trojan and received a community score of 
+    -295, indicating high confidence of malicious activity.</li>
+  <li><b>Domain:</b>The malware communicated with org.misecure.com through HTTP requests, suggesting 
+    outbound communication to attacker-controlled infrastructure.</li>
+  <li><b>IP Address:</b>DNS resolution linked the domain to 207.148.109.242, an external host potentially 
+    used for command-and-control (C2) communications.</li>
+  <li><b>MD5 Hash:</b>The file's MD5 hash (287d612e29b71c90aa54947313810a25) provides an additional unique 
+    identifier for threat detection and investigation.</li>
+  <li><b>Network Artifacts:</b>Observed DNS lookups and HTTP GET requests indicate the malware attempted to 
+    establish external network communications after execution.</li>
+  <li><b>Command & Control (C2):</b>Communication with the identified domain and IP address suggests the
+     malware was attempting to connect to a remote server for instructions or data exchange.</li>
+  <li><b>Capabilities:</b>No direct evidence of credential theft or keylogging was observed during 
+    analysis; however, the Trojan classification indicates the malware may possess additional 
+    capabilities beyond those captured in the sandbox environment.</li>
+</ul>
+
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card d-flex justify-content-center align-items-center">
+      <img src="assets/Phishing Investigation/pyramid of pain.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Pyramid of Pain">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 8. Pyramid of Pain Mapping of Investigation Findings:</b>
+Indicators of compromise identified during the investigation were mapped to the Pyramid of Pain framework, 
+including file hashes, IP addresses, domains, network artifacts, and command-and-control activity. This 
+analysis highlights which indicators provide the greatest defensive value and create the highest 
+operational cost for attackers when detected and mitigated.
+</p></i>
+
+  <hr class="section-divider">
+
+  <!-- Incident Ticket Documentation -->
+  <h4 class="section-title">Incident Ticket Documentation</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card d-flex justify-content-center align-items-center">
+      <img src="assets/Phishing Investigation/Incident Ticket Documentation.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Alert Ticket">
+    </div>
+  </div>
+</div>
+<p class="mt-2 text-center"><i><b>Figure 9. Incident Ticket Documentation and Investigation Findings:</b>
+Final incident ticket documenting the phishing alert, malware analysis, identified indicators of 
+compromise, and response actions taken to support incident resolution and organizational recordkeeping.
+</p></i>
+
+
+  <!-- Phishing Response Playbook -->
+  <h4 class="section-title">Phishing Response Playbook</h4>
+  <a href="assets/Phishing Investigation/Phishing-incident-response-playbook.pdf" target="_blank" class="pdf-link">Phishing Incident Response Playbook PDF</a>
+
+
+   <!-- Findings & Recommendations -->
+  <h4 class="section-title">Findings & Recommendations</h4>
+  <h5 class="stage-title">
+  <span class="text-primary">Findings:</span>
+  </h5>
+  <ul>
+    <li>Malicious attachment detected.</li>
+    <li>Multiple antivirus vendors flagged the file.</li>
+    <li>Malicious domain identified.</li>
+    <li>Indicators matched known phishing activity.</li>
+  </ul>
+  <h5 class="stage-title">
+  <span class="text-primary"></span>Recommendations:
+  </h5>
+  <ul>
+    <li>Block Malicious Indicators</li>
+    <li>Endpoint Investigation and Remediation</li>
+    <li>Strengthen Email Security Controls</li>
+    <li>Security Awareness Training</li>
+    <li>Continuous Monitoring</li>
+  </ul>
+
+
+   <!-- Key Skills Demonstrated -->
+  <h4 class="section-title">Key Skills Demonstrated</h4>
+  <ul>
+    <li>Incident Investigation</li>
+    <li>Threat Analysis</li>
+    <li>IOC Identification</li>
+    <li>VirusTotal Analysis</li>
+    <li>Security Documentation</li>
+    <li>Incident Response</li>
+    <li>Pyramid of Pain Analysis</li>
+    <li>MITRE ATT&CK Mapping</li>
+    <li>Phishing Analysis</li>
+    <li>SOC Workflow Management</li>
+  </ul>
+
+   <!-- Project Outcome -->
+  <h4 class="section-title">Project Outcome</h4>
+  <p>This project showcases the practical skills required of a SOC Analyst, including alert triage, 
+    malware investigation, IOC analysis, threat intelligence utilization, incident documentation, and 
+    response planning. By following a structured investigation process and applying defensive security 
+    concepts, the project demonstrates the ability to analyze, document, and respond to phishing-related 
+    security incidents in a professional environment.</p>
+
+
+  <!-- Resources -->
+  <h4 class="section-title">Investigation Artifacts</h4>
+  <div class="card p-4">
+    <p>👉 Full Report in PDF and Screenshots</p>
+    <a href="assets/Phishing Investigation/Phishing-incident-response-playbook.pdf" target="_blank" class="pdf-link">Phishing Incident Response Playbook (PDF)</a>
+    <a href="assets/Phishing Investigation/Alert-ticket.pdf" target="_blank" class="pdf-link">Completed Security Incident Ticket (PDF)</a>
+  </div>
+
+</div>
+
+<!-- Top button with glow -->
+<button onclick="scrollToTop()" id="topBtn" class="btn-glow" title="Back to top">⬆</button>
+
+<!-- Evidence Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content evidence-modal">
+
+      <button type="button" class="btn-close-custom" onclick="closeImageModal()">✕</button>
+
+      <div class="evidence-header">
+        🔍 Evidence Viewer
+      </div>
+
+      <div class="evidence-container">
+        <img id="modalImage" src="" class="img-fluid evidence-image">
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container text-center">
+    <a href="index.html#projects" class="btn-cyber">🏠 Dave Portfolio</a>
+    <p class="mt-3">© 2026 Dave Espinoza</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+
+function openImageModal(src) {
+  document.getElementById("modalImage").src = src;
+  imageModal.show();
+}
+
+function closeImageModal() {
+  imageModal.hide();
+}
+
+  // Smooth scroll to top
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // Show/hide top button on scroll
+  window.onscroll = function () {
+    document.getElementById("topBtn").style.display =
+      document.documentElement.scrollTop > 200 ? "block" : "none";
+  };
+</script>
+</body>
+</html>
