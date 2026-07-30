@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wazuh SIEM Home Lab Projects | Dave Espinoza</title>
+  <title>Active Directory Project | Dave Espinoza</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -362,43 +362,53 @@
 
 <div class="container" style="padding-top: 20px;">
 
-  <h1 class="mb-4">🔐 Home Lab Project: SIEM Monitoring & Brute-Force Attack Detection</h1>
+  <h1 class="mb-4">Active Directory Administration & SIEM Event Analysis</h1>
+  <p><i><b>
+    🔧 This is an active lab project, updated as new phases are completed. Currently working on: 
+    assigning and testing access-control permissions across department groups.
+  </i></b></p>
 
   <!-- Overview -->
   <h4 class="section-title" id="overview">Overview</h4>
-  <p>This project demonstrates a simulated security operations environment using virtual machines to 
-    emulate an attacker, a monitored endpoint, and a centralized SIEM server. The objective is to perform 
-    a brute-force attack from an attacker machine and observe how security logs are generated, forwarded, 
-    and analyzed by the SIEM platform.
+  <p>This project focused on deploying an on-premises Active Directory environment using a Windows Server 
+    Domain Controller and a domain-joined Windows client, then integrating both systems with a Wazuh SIEM 
+    to monitor and interpret identity-related security events. The goal was to gain hands-on experience 
+    administering core Active Directory functions, including organizational units, user accounts, security 
+    groups, and permissions, while building the SIEM analysis skills needed to correlate administrative 
+    actions with their corresponding Windows security events. This project reflects a core responsibility 
+    found in many IT support and security analyst roles: managing identity infrastructure and maintaining 
+    visibility into changes made within it.
 
-  <p>The lab consists of three systems communicating within an isolated internal network:</p>
+  <p>The lab consists of three systems communicating with each other within an isolated internal network:</p>
 
   <ul>
-    <li>Kali Linux – Attacker <i>(192.168.10.8)</i></li>
+    <li>Windows Server – Domain Controller <i>(192.168.10.23)</i></li>
     <li>Ubuntu – Wazuh Server <i>(192.168.10.3)</i></li>
    <li>Windows – Wazuh Agent <i>(192.168.10.24)</i></li>
   </ul>
 
-  <p>All machines are configured within the same internal network to safely simulate cyber attack scenarios 
-  without external exposure.</p>
 
  <!-- Objective -->
   <h4 class="section-title" id="objective">Objective</h4>
   <ul>
-    <li>Simulate brute-force attack attempts from attacker machine</li>
-    <li>Monitor security events generated on Windows endpoint</li>
-    <li>Forward logs from Windows agent to centralized SIEM server</li>
-    <li>Analyze alerts and detection visibility in the Wazuh dashboard</li>
+    <li>Gain hands-on experience deploying and administering an Active Directory environment, 
+        including creating and managing organizational units, user accounts, security groups, and 
+        permissions</li>
+    <li>Understand how identity and access management actions are recorded within Windows security logs</li>
+    <li>Practice reading, interpreting, and correlating Active Directory events within a SIEM platform 
+        (Wazuh) to build practical security monitoring and log analysis skills</li>
+    <li>Reinforce the relationship between administrative actions and their corresponding audit trail, 
+        a core concept in identity security and incident detection</li>
   </ul>
 
    <!-- Tools & Technologies Used -->
   <h4 class="section-title" id="tools">Tools & Technologies Used</h4>
   <ul>
-    <li>Wazuh – SIEM and host-based intrusion detection</li>
-    <li>Ubuntu - Wazuh Manager</li>
-    <li>Windows 10 – Monitor Endpoint</li>
-    <li>Kali Linux – Attacker Machine</li>
-    <li>Oracle VM VirtualBox – Virtualized lab environment</li>
+    <li>Windows Server 2022 (Domain Controller)</li>
+    <li>Windows 10 (domain-joined client)
+    <li>Wazuh (SIEM manager on Ubuntu, agents on DC + client)
+    <li>VirtualBox (Internal Network)
+    <li>Active Directory Users and Computers, Advanced Audit Policy Configuration</li>
   </ul>
 
 <hr class="section-divider">
@@ -407,170 +417,228 @@
    <div class="row g-4">
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/Wazuh Homelab Flowchart.png"
+      <img src="assets/ad management/lab arc.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
            alt="Wazuh Homelab Flowchart">
     </div>
+    <p class="mt-2 text-center"><i>Lab architecture showing the relationship between the Domain Controller, 
+    domain-joined client, and SIEM manager: DC01 (Windows Server, AD DS) ↔ Windows Client (domain-joined, 
+    Wazuh agent) ↔ Ubuntu (Wazuh Manager), all connected via an isolated VirtualBox Internal Network 
+    ("demo").</p></i>
   </div>
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/cybersecurity flow.png"
+      <img src="assets/ad management/pinging.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
            alt="Cybersecurity Flow">
     </div>
   </div>
-<p class="mt-2 text-center"><i>Wazuh SIEM Home Lab Network Diagram and Attack Flow<br>
-      Network architecture of the SIEM home lab environment showing an attacker 
-      system (Kali Linux), monitored endpoint (Windows with Wazuh agent), and centralized Wazuh server 
-      (Ubuntu) communicating within an isolated internal network for brute-force attack detection and log 
-      analysis.</p></i>
+<p class="mt-2 text-center"><i>Confirming network connectivity between the Domain Controller and Windows 
+    client after enabling the ICMPv4-In firewall rule, establishing that both machines can communicate on 
+    the internal lab network before proceeding with domain configuration.</p></i>
   </div>
 
 <hr class="section-divider">
 
-<h4 class="section-title" id="dashboard">Wazuh Manager Dashboard</h4>
+<h4 class="section-title" id="architecture">Domain Controller Setup</h4>
    <div class="row g-4">
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/homelab/Dashboard login and user.png"
+      <img src="assets/ad management/Setting up AD DS.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Wazuh Homelab Flowchart">
+    </div>
+    <p class="mt-2 text-center"><i>Installing the Active Directory Domain Services role and promoting the 
+        server to a domain controller by creating a new forest and domain (lab.local), establishing AD DS
+         and DNS as core services on WINSERVERDC.</p></i>
+  </div>
+  </div>
+
+<h4 class="section-title" id="dashboard">Domain Controller Server Manager Overview</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/ad management/Server Manager - Dashboard.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
            alt="Dashboard login and user">
     </div>
   </div>
-  <p class="mt-2 text-center"><i>Wazuh SIEM displaying filtered security events generated from failed login 
-    attempts and user account creation on Windows-agent.</p></i>
+  <p class="mt-2 text-center"><i>Server Manager dashboard on WINSERVERDC confirming successful deployment, 
+    with AD DS and DNS now listed as active roles alongside the default File and Storage Services.</p></i>
   </div>
 
-<hr class="section-divider">
-
-<h4 class="section-title" id="attacker">Kali Attacker Setup</h4>
+  <h4 class="section-title" id="dashboard">Wazuh Agent Deployment Confirmation</h4>
    <div class="row g-4">
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/homelab/kali setup check port.png"
+      <img src="assets/ad management/Wazuh dashboard.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
-           alt="kali setup check port">
+           alt="Dashboard login and user">
     </div>
   </div>
-  <p class="mt-2 text-center"><i>Attacker reconnaissance phase showing connectivity verification and service 
-    enumeration. The Windows-agent (192.168.10.24) responds to ICMP, and Nmap confirms port 3389 (RDP) is 
-    open, indicating the target is reachable for brute-force simulation.</i></p>
-
- <div class="col-md-10 mx-auto">
-    <div class="img-container cyber-card">
-      <img src="assets/homelab/kali preparing for attack.png"
-           class="img-fluid"
-           onclick="openImageModal(this.src)"
-           alt="kali preparing for attack">
-    </div>
-  </div>
-  <p class="mt-2 text-center"><i>Brute-force preparation and execution from Kali attacker. A custom 
-    password list was created and used with Hydra to perform an RDP brute-force attempt against 
-    Windows-agent (192.168.10.24).</i></p>
-
-  <p class="mt-2 text-center"><i>Successfully triggered a False Positive during an RDP brute-force 
-    simulation using Hydra. Although the password 'Password123' was incorrect, the service returned a 
-    'Not Authorized' flag rather than 'Access Denied.' This occurred because the target user 'homel' 
-    had not yet been added to the Remote Desktop Users group, causing Hydra to misidentify the permission 
-    error as a successful credential match.</i></p>
+  <p class="mt-2 text-center"><i>Wazuh dashboard confirming both agents are registered, the Windows client 
+    and the newly deployed Windows Server (DC01) agent, with WINSERVERDC showing an active connection to 
+    the Wazuh manager, ready to forward Active Directory-related security events.</p></i>
   </div>
 
-<hr class="section-divider">
-
-<h4 class="section-title" id="logs">Logs Generated on Windows</h4>
+<h4 class="section-title" id="attacker">Applying Advanced Audit Policy Settings</h4>
    <div class="row g-4">
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/homelab/Dashboard generated event.png"
+      <img src="assets/ad management/Enabling Advanced Audit Policy settings.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
-           alt="Dashboard generated event">
+           alt="Enabling advanced audit policy">
     </div>
   </div>
-  <p class="mt-2 text-center"><i>Security events observed on the Wazuh manager (Ubuntu) confirming log 
-    generation from the Windows-agent following a simulated brute-force attack.</p></i>
+
+   <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/ad management/Enabling Advanced Audit Policy settings 3.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="gpupdate">
+    </div>
+  </div>
+  <p class="mt-2 text-center"><i>
+  Account Management — Advanced Audit Policy Configuration showing "Audit User Account Management" and 
+  "Audit Security Group Management" enabled for Success events, ensuring account and group lifecycle changes 
+  generate detailed security logs.
+DS Access — "Audit Directory Service Changes" enabled for Success events, allowing Active Directory to log 
+attribute-level changes, including old and new values, whenever an object is modified.
+gpupdate /force — Forcing an immediate Group Policy update on the Domain Controller to apply the new audit 
+policy settings without waiting for the default refresh interval.
+</i></p>
+</div>
+
+
+<hr class="section-divider">
+
+<h4 class="section-title" id="logs">Building the OU Structure and Creating Department Users</h4>
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/ad management/Creating OU.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="Creating OU">
+    </div>
+  <p class="mt-2 text-center"><i>Creating the organizational unit structure in Active Directory Users 
+    and Computers, establishing four department-based OUs (IT, Security, HR, and Finance) to reflect a 
+    realistic company hierarchy.</p></i>
+  </div>
 
   <div class="col-md-10 mx-auto">
     <div class="img-container cyber-card">
-      <img src="assets/homelab/summary of report.png"
+      <img src="assets/ad management/creatingusers.png"
            class="img-fluid"
            onclick="openImageModal(this.src)"
-           alt="summary of report">
+           alt="creating users">
     </div>
+  <p class="mt-2 text-center"><i>Populating each department OU with user accounts representing a range of 
+    job roles and seniority levels, providing a realistic identity structure to support later group 
+    membership and permission assignments.</p></i>
   </div>
-  <p class="mt-2 text-center"><i>This log represents a telemetry capture of a failed authentication attempt. 
-    It shows that at 10:08 PM, a workstation named 'kali' (IP 192.168.10.8) attempted to log into the 
-    'homel' account on the Windows VM using the NTLM protocol. The Windows Security Auditing system 
-    intercepted the bad password, generated Event ID 4625, and the Wazuh agent immediately forwarded this 
-    data to the manager for analysis.</p></i>
-  </div>  
+  </div> 
+  
+<h4 class="section-title" id="Group">Assigning Users to Department Security Groups</h4>
+<p>Users are added to security groups rather than being granted permissions individually. This ensures 
+  access can be managed at the group level, when someone joins, changes roles, or leaves a department, 
+  updating their group membership automatically updates their access, without needing to reconfigure 
+  permissions one person at a time.</p>
+
+   <div class="row g-4">
+  <div class="col-md-10 mx-auto">
+    <div class="img-container cyber-card">
+      <img src="assets/ad management/creatinggroup.png"
+           class="img-fluid"
+           onclick="openImageModal(this.src)"
+           alt="security groups">
+    </div>
+    <p class="mt-2 text-center"><i>Group membership for all four department security groups (IT-Admins, 
+      Security-Team, HR-Staff, Finance-Staff), confirming each user has been added to the group corresponding 
+      to their department.</p></i>
+  </div>
+  </div>   
 
 <hr class="section-divider">
 
-<h4 class="section-title" id="findings">Findings (SIEM Home Lab — Brute-Force Attempt)</h4>
-<p><b>Incident Overview:</b>
-  <ul>
-    <li>Date: April 8, 2026</li>
-    <li>Time: 10:08 PM</li>
-    <li>Target: Windows VM (Wazuh Agent)</li>
-    <li>Attacker: Kali VM</li>
-    <li>Wazuh Manager: Ubuntu VM</li>
-  </ul>
-  <b>Event Summary:</b>
-  <ul>
-    <li>A brute-force login attempt was simulated from Kali (192.168.10.8) targeting the Windows machine 
-      (192.168.10.24).</li>
-    <li>The authentication attempts failed and did not result in unauthorized access.</li>
-    <li>The Windows endpoint generated security logs for each failed login attempt.</li>
-    <li>The Wazuh agent successfully forwarded these logs to the centralized Wazuh manager.</li>
-    <li>The Wazuh dashboard displayed alert details including source IP address, hostname, and event severity.</li>
-    <li>The SIEM correlated the failed login events and provided visibility into the attempted intrusion.</li>
-  </ul>
-</p>
-
-<hr class="section-divider">
-
-<h4 class="section-title" id="lessons">Lessons Learned</h4>
+<h4 class="section-title" id="lessons">Lessons Learned (So Far..)</h4>
 <p>
-  <b>Importance of Agent Configuration:</b>
+  <b>SIEM visibility depends on agent coverage, not network proximity:</b>
   <ul>
-    <li>Proper configuration of the Wazuh agent on the Windows host ensured reliable log forwarding to the SIEM manager.</li>
+    <li>One of my early assumptions was that being on the same network as the Wazuh manager meant activity 
+      would be visible. That's not how it works only machines running an installed Wazuh agent generate 
+      telemetry, and events are logged on whichever machine the action actually occurred on. This reshaped 
+      how I think about SIEM deployment: visibility is a deliberate design choice, not a byproduct of network 
+      topology.</li>
   </ul>
-  <b>Network Segmentation:</b>
+  <b>Small environment quirks can cost the most time:</b>
   <ul>
-    <li>Conducting the test within an isolated internal network allowed safe simulation of attack activity without 
-      external exposure.</li>
+    <li>A Server Core vs. Desktop Experience mismatch during initial install, a Guest Additions/display issue, 
+      and a firewall rule silently blocking ICMP all turned into real troubleshooting exercises. None of these 
+      were "hard" problems conceptually, but they were good reminders that a lab environment surfaces the same
+       kind of small, annoying issues that show up in production and that methodical troubleshooting 
+       (checking one variable at a time: network adapter, firewall rule, service state) matters more than 
+       knowing the "big" concepts.</li>
   </ul>
-  <b>Detection Over Attack Success:</b>
+  <b>Temporary changes need a deliberate rollback step:</b>
   <ul>
-    <li>Even though the brute-force attack failed, the SIEM successfully detected suspicious authentication attempts, 
-      demonstrating the value of proactive monitoring.</li>
+    <li>Getting internet access to the DC for the Wazuh agent install meant temporarily adding a NAT 
+      adapter but leaving that in place afterward would have quietly widened the attack surface of a 
+      domain controller for no ongoing reason. Disabling it once the agent was confirmed working reinforced 
+      a habit I want to carry forward: every temporary change needs a planned reversal, not just a mental 
+      note.</li>
   </ul>
-  <b>Visibility and Incident Response Practice:</b>
+  <b>Audit policy has to be turned on deliberately — logging isn't automatic:</b>
   <ul>
-    <li>Analyzing failed login events, source IP addresses, and hostnames provided hands-on experience in identifying and 
-      investigating security incidents.</li>
-  </ul>
-  <b>Centralized Log Monitoring:</b>
-  <ul>
-    <li>The lab highlighted the importance of centralized logging in improving detection and simplifying incident 
-      analysis across endpoints.</li>
+    <li>Enabling Advanced Audit Policy (Account Management and DS Access, Success events) via GPO made it 
+      clear that Windows doesn't log detailed AD changes out of the box. If I want to actually observe and 
+      correlate access-control events later, the audit policy has to be configured before the activity 
+      happens, not after.</li>
   </ul>
 </p>
 
 <hr class="section-divider">
 
-<h4 class="section-title" id="recommendation">Recommendations</h4>
-<ul>
-  <li>Implement account lockout policies to mitigate brute-force attacks.</li>
-  <li>Configure alert thresholds for repeated failed login attempts.</li>
-  <li>Enable additional log sources for broader visibility.</li>
-  <li>Integrate automated response actions for high-severity alerts.</li>
-</ul>
+<h4 class="section-title" id="recommendation">Next Steps</h4>
+<p>
+  <ul>
+    <li>Assign NTFS permissions to department security groups on shared department folders, so each group 
+      (IT, Security, HR, Finance) has access only to its own resources</li>
+  </ul>
+
+  <ul>
+    <li>Enable object access auditing (SACLs) on those shared folders to capture access attempts — including 
+      denied access — in the Security event log</li>
+  </ul>
+
+  <ul>
+    <li>Validate end-to-end visibility in Wazuh, confirming that permission changes and access attempts on 
+      the DC are correctly forwarded and searchable in the SIEM</li>
+  </ul>
+
+  <ul>
+    <li>Test cross-department access attempts (e.g., a Finance user attempting to open the HR share) to 
+      generate and analyze real access-control violation events</li>
+  </ul>
+
+  <ul>
+    <li>Explore delegated AD permissions (e.g., allowing the IT group limited rights to reset passwords 
+      within their OU) as a follow-up phase, to test more advanced DS Access auditing scenarios</li>
+  </ul>
+
+  <ul>
+    <li>Continue documenting each phase with screenshots and captions as the project progresses, since this 
+      is being built and published as an active, in-progress lab rather than a finished writeup</li>
+  </ul>
+
+</p>
 
 
 </div>
